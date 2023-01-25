@@ -1,5 +1,2 @@
-const filedrop = new FileDrop('body');
+<script src='file-drop.mjs' type='module'></script>
 
-filedrop.event('filedrop', (file) => {
-				// your code here
-});

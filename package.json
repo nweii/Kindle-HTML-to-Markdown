@@ -4,6 +4,7 @@
 				"file-drop-element": "^1.0.1"
 		},
 		"dependencies": {
+				"file-saver": "^2.0.5",
 				"tailwindcss": "^3.2.4"
 		}
 }
