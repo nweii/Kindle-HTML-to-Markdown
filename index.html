@@ -2,12 +2,22 @@
 <html lang="en">
 
 <head>
-	<title>Title</title>
+	<title>Convert Kindle Highlights HTML to Markdown file</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="description" content="Description.">
+	<meta name="description" content="Convert an HTML file of book notes exported from Kindle's mobile app to a Markdown text file perfect for Obsidian and similar note apps.">
+	<!-- <link rel="stylesheet" href="/assets/output.css" type="text/css"> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+	<script></script>
 </head>
 
 <body>
-	
+	<form>
+			<input id="file" type="file" accept=".epub" multiple>
+			<small>Multiple files allowed.</small>
+	</form>
+	<form action="/file-upload"
+	class="dropzone block text-center h-screen"
+	id="my-awesome-dropzone"></form>
 </body>
