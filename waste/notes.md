@@ -27,30 +27,39 @@ Include the File-Drop library in your project, you can do this by installing it 
 
 In your JavaScript file, initialize the FileDrop instance and specify the DOM element that will be used as the file drop zone.
 
-Copy code
-const filedrop = new FileDrop('body');
-Add an event listener for the filedrop event, this event is triggered when a file is dropped in the drop zone.
-Copy code
-filedrop.event('filedrop', (file) => {
-		// your code here
-});
+```
+	const filedrop = new FileDrop('body');
+	Add an event listener for the filedrop event, this event is triggered when a file is dropped in the drop zone.
+	Copy code
+	filedrop.event('filedrop', (file) => {
+			// your code here
+	});
+```
 Inside the event listener, you can use the FileReader API to read the contents of the uploaded file and parse it as an HTML document.
-Copy code
-const reader = new FileReader();
-reader.onload = (event) => {
-		const fileContent = event.target.result;
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(fileContent, "text/html");
-		// your code here
-};
-reader.readAsText(file);
+
+```
+	const reader = new FileReader();
+	reader.onload = (event) => {
+			const fileContent = event.target.result;
+			const parser = new DOMParser();
+			const doc = parser.parseFromString(fileContent, "text/html");
+			// your code here
+	};
+	reader.readAsText(file);
+```
 Once you have the HTML document, you can use querySelector and getElementsByTagName to select the elements you need and call your JavaScript function with the selected elements as inputs.
-Copy code
-const container = doc.querySelector('.bodyContainer').getElementsByTagName('div');
-// call your function
-const markdown = kindleToMarkdown(container);
+
+```
+	const container = doc.querySelector('.bodyContainer').getElementsByTagName('div');
+	// call your function
+	const markdown = kindleToMarkdown(container);
+```
+
 Finally, you can use FileSaver.js or js-file-download to save the output as a file for download.
-Copy code
-const blob = new Blob([markdown], {type: "text/plain;charset=utf-8"});
-saveAs(blob, "output.md");
+
+```
+	const blob = new Blob([markdown], {type: "text/plain;charset=utf-8"});
+	saveAs(blob, "output.md");
+```
+
 Keep in mind that the code you provided assumes that the HTML file has a specific structure, you might have to adjust the selectors accordingly based on the structure of the file you want to process.
