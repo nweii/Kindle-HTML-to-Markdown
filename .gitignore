@@ -1,6 +1,6 @@
+Examples/
+waste/
 .DS_Store
 .nova
 .replit
-node_modules
-/Examples
-/waste
+node_modules/
