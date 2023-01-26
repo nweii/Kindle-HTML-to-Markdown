@@ -13,11 +13,14 @@
 </head>
 
 <body>
-	<form>
-			<input id="file" type="file" accept=".epub" multiple>
+	<div class="flex flex-col content-start">
+		<h1>Kindle HTML to Markdown</h1>
+		<p></p>
+		<form>
+			<input id="fileInput" type="file" accept=".html" multiple>
 			<small>Multiple files allowed.</small>
-	</form>
-	<form action="/file-upload"
-	class="dropzone block text-center h-screen"
-	id="my-awesome-dropzone"></form>
+		</form>
+		<button type="button" id="convertBtn" style="margin-top:2rem;">Convert and Download</button>
+	</div>
+	<script src="kindleToMd.js"></script>
 </body>
