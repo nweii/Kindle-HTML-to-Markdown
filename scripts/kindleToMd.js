@@ -59,7 +59,6 @@ From *${title}* by ${authors}:
 				md += tag.textContent.trim().replace("Bookmark -","*Bookmark* at") + '\n\n';
 			} else {
 				const text = tag.nextElementSibling.textContent.trim();
-
 				if (tag.textContent.includes('Note')) {
 					md += `${text}\n\n`;
 				} else if (tag.textContent.includes('Highlight')) {
