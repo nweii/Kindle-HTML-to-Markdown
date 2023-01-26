@@ -41,6 +41,7 @@ function kindleToMarkdown(doc) {
 	const title = doc.querySelector('.bookTitle').textContent.trim();
 	let authors = doc.querySelector('.authors').textContent.trim();
 	if (authors.split(',').length === 2) {
+		// If author leads with last name and if there's only 1 author, swap last & first names
 		authors = authors.replace(/(.+),(.+)/u, "$2 $1").trim();
 	};
 
@@ -59,16 +60,21 @@ From *${title}* by ${authors}:
 	for (let el = 0; el < container.length; el++) {
 		let tag = container[el];
 		if (tag.className === 'sectionHeading') {
+			// Format as Markdown H3 heading
 			md += `### ${tag.textContent.trim()}\n`;
 		} else if (tag.className === 'noteHeading') {
 			// Notes and highlights are stored in the next sibling tag
 			if (tag.textContent.includes('Bookmark')) {
+				// Write bookmark indicator
 				md += tag.textContent.trim().replace("Bookmark -","*Bookmark* at") + '\n\n';
 			} else {
+				// get note or highlight from contents of next element
 				const text = tag.nextElementSibling.textContent.trim();
 				if (tag.textContent.includes('Note')) {
+					// write note on new line
 					md += `${text}\n\n`;
 				} else if (tag.textContent.includes('Highlight')) {
+					// format as markdown quote
 					md += `> ${text}\n\n`;
 				}
 			}
