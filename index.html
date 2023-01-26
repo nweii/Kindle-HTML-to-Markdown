@@ -23,19 +23,25 @@
 				This tool converts that HTML file into to a Markdown file perfect for <a href="https://obsidian.md/" target="_blank">Obsidian</a> and similar apps.
 			</p>
 		</div>
-		<div class="mt-12">
+		<div class="my-24">
 			<div id="dropzoneContainer" class="relative">
-				<div id="dropzone" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800 animate-pulse rounded-2xl shadow hover:shadow-xl">
-					<p class="font-medium form-label opacity-90">
-						Drag Kindle HTML file(s) here to download as .md
+				<div id="dropzone" class="absolute inset-0 flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-800 motion-safe:animate-pulse rounded-2xl shadow hover:shadow-xl">
+					<p id="dropPrompt" class="font-medium text-center form-label opacity-90">
+						Drop Kindle HTML file(s) here to download as .md
+					</p>
+					<p id="clickPrompt" class="font-medium text-sm text-center form-label opacity-80">
+						or click to choose
 					</p>
 				</div>
-				<form class="opacity-0 text-center">
+				<form id="primePicker" class="opacity-0 text-center">
 					<input id="fileInput" class="w-full form-input rounded-md shadow hover:shadow-lg transition mb-4 py-48 border-0 dark:bg-slate-800 text-sm" type="file" accept=".html" multiple>
 				</form>
 			</div>
 		</div>
 		<!-- <button type="button" id="convertBtn" style="margin-top:2rem;">Convert and Download</button> -->
 	</div>
+	<footer class="mt-12 text-sm opacity-60 w-full text-right px-5 pb-5 max-w-screen-sm">
+		<p>Made by <a href="https://nathancheng.work/" target="_blank" class="font-medium no-underline">Nathan Cheng</a> • <a href="https://github.com/nweii/Kindle-HTML-to-Markdown" target="_blank" class="font-medium no-underline">Github</a> (CC0-1.0 license)</p>
+	</footer>
 	<script src="/scripts/kindleToMd.js"></script>
 </body>
