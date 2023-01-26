@@ -56,7 +56,7 @@ From *${title}* by ${authors}:
 	for (let el = 0; el < container.length; el++) {
 		let tag = container[el];
 		if (tag.className === 'sectionHeading') {
-			md += `## ${tag.textContent.trim()}\n`;
+			md += `### ${tag.textContent.trim()}\n`;
 		} else if (tag.className === 'noteHeading') {
 			// Notes and highlights are stored in the next sibling tag
 			if (tag.textContent.includes('Bookmark')) {

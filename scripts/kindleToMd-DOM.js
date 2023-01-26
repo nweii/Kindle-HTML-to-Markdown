@@ -25,7 +25,7 @@ function kindleToMarkdown(md) {
 		let tag = container[el];
 		
 		if (tag.className === 'sectionHeading') {
-			md += `## ${tag.textContent.trim()}\n`;
+			md += `### ${tag.textContent.trim()}\n`;
 		} 
 		else if (tag.className === 'noteHeading') {
 			// Notes and highlights are stored in the next sibling tag
