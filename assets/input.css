@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base { 
+	h1 {
+		@apply font-semibold text-lg mb-2;
+	}
+	p {
+		@apply mb-2;
+	}
+	a {
+		@apply underline underline-offset-2;
+	}
+}

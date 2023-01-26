@@ -1,5 +1,9 @@
-let convertBtn = document.getElementById('convertBtn');
-convertBtn.addEventListener('click', convertAndDownload);
+// let convertBtn = document.getElementById('convertBtn');
+// convertBtn.addEventListener('click', convertAndDownload);
+const fileInput = document.getElementById("fileInput");
+fileInput.addEventListener("change", function() {
+	convertAndDownload(fileInput.files);
+});
 
 function convertAndDownload() {
 	let fileInput = document.getElementById('fileInput');

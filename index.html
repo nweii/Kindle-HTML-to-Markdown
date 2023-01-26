@@ -6,21 +6,32 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="Convert an HTML file of book notes exported from Kindle's mobile app to a Markdown text file perfect for Obsidian and similar note apps.">
-	<!-- <link rel="stylesheet" href="/assets/output.css" type="text/css"> -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+	<link rel="stylesheet" href="/assets/output.css" type="text/css">
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css"> -->
 	<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
 	<script></script>
 </head>
 
-<body>
-	<div class="flex flex-col content-start">
-		<h1>Kindle HTML to Markdown</h1>
-		<p></p>
-		<form>
-			<input id="fileInput" type="file" accept=".html" multiple>
-			<small>Multiple files allowed.</small>
-		</form>
-		<button type="button" id="convertBtn" style="margin-top:2rem;">Convert and Download</button>
+<body class="flex flex-col items-center bg-stone-200 text-stone-900 dark:bg-gray-900 dark:text-gray-50">
+	<div class="flex flex-col gap-6 mx-5 my-5 max-w-screen-sm">
+		<div>
+			<h1>Convert Kindle Notebook HTML to Markdown</h1>
+			<p class="text-sm dark:text-white opacity-90 leading-relaxed">While viewing a book's highlights, notes, and bookmarks in the Kindle app, you can tap the Share button to email them as an HTML file.</p>
+			<p class="text-sm dark:text-white opacity-90 leading-relaxed">This tool converts that HTML file into to a Markdown file perfect for <a href="https://obsidian.md/" target="_blank">Obsidian</a> and similar apps.</p>
+		</div>
+		<div class="mt-12">
+			<div id="dropzoneContainer" class="relative">
+				<div id="dropzone" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-800 animate-pulse rounded-2xl shadow hover:shadow-xl">
+					<p class="font-medium form-label opacity-90">
+						Drag Kindle HTML file(s) here to download as .md
+					</p>
+				</div>
+				<form class="opacity-0 text-center">
+					<input id="fileInput" class="w-full form-input rounded-md shadow hover:shadow-lg transition mb-4 py-48 border-0 dark:bg-slate-800 text-sm" type="file" accept=".html" multiple>
+				</form>
+			</div>
+		</div>
+		<!-- <button type="button" id="convertBtn" style="margin-top:2rem;">Convert and Download</button> -->
 	</div>
 	<script src="/scripts/kindleToMd.js"></script>
 </body>
