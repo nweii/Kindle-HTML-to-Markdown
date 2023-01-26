@@ -5,6 +5,11 @@ fileInput.addEventListener("change", function() {
 	convertAndDownload(fileInput.files);
 });
 
+if (const isTouch = () => ('ontouchstart' in window || navigator.maxTouchPoints)) {
+	const clickPrompt = document.querySelector('#clickPrompt');
+	clickPrompt.textContent = clickPrompt.textContent.replace('click','tap');
+}
+
 function convertAndDownload() {
 	let fileInput = document.getElementById('fileInput');
 	let files = fileInput.files; // an array
@@ -72,4 +77,9 @@ From *${title}* by ${authors}:
 		}
 	}
 	return md;
+}
+
+function isTouch() {
+	if ('ontouchstart' in window || navigator.maxTouchPoints) return true;
+	else return false;
 }
