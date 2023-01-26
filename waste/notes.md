@@ -29,8 +29,9 @@ In your JavaScript file, initialize the FileDrop instance and specify the DOM el
 
 ```
 	const filedrop = new FileDrop('body');
-	Add an event listener for the filedrop event, this event is triggered when a file is dropped in the drop zone.
-	Copy code
+```
+Add an event listener for the filedrop event, this event is triggered when a file is dropped in the drop zone.
+```
 	filedrop.event('filedrop', (file) => {
 			// your code here
 	});
@@ -61,5 +62,28 @@ Finally, you can use FileSaver.js or js-file-download to save the output as a fi
 	const blob = new Blob([markdown], {type: "text/plain;charset=utf-8"});
 	saveAs(blob, "output.md");
 ```
-
+### front-end for filedrop
 Keep in mind that the code you provided assumes that the HTML file has a specific structure, you might have to adjust the selectors accordingly based on the structure of the file you want to process.
+
+For the front-end of the FileDrop, you will need to create a HTML structure that will serve as the file drop zone, where the user can drag and drop the file they want to upload and process.
+Here is an example of HTML structure you could use:
+```
+<div id="filedrop-container">
+		<div id="filedrop-content">
+				<p> Drag and Drop your HTML file here</p>
+				<p> Or </p>
+				<input type="file" id="fileInput" name="file" accept=".html">
+		</div>
+</div>
+```
+In this example, the div element with the id of filedrop-container serves as the main container for the file drop zone. Inside it, there is a div element with the id of filedrop-content, which contains a message that instructs the user to drag and drop the file they want to upload. Additionally, you could add a file input element with the id of fileInput that allows the user to select a file by browsing their computer.
+
+You can then use CSS to style the container and the message to make it look like a file drop zone.
+
+You can also use the onchange event of the input field to trigger the file reading and processing, so the user can choose to either drag and drop a file or select it with the input field.
+
+```
+document.getElementById("fileInput").addEventListener("change", function(e) {
+		// your code here
+});
+```

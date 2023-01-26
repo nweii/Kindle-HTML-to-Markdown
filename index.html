@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Convert Kindle Highlights HTML to Markdown file</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Convert an HTML file of book notes exported from Kindle's mobile app to a Markdown text file perfect for Obsidian and similar note apps.">
+	<!-- <link rel="stylesheet" href="/assets/output.css" type="text/css"> -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+	<script></script>
+</head>
+
+<body>
+	<div class="flex flex-col content-start">
+		<h1>Kindle HTML to Markdown</h1>
+		<p></p>
+		<form>
+			<input id="fileInput" type="file" accept=".html" multiple>
+			<small>Multiple files allowed.</small>
+		</form>
+		<button type="button" id="convertBtn" style="margin-top:2rem;">Convert and Download</button>
+	</div>
+	<script src="kindleToMd.js"></script>
+</body>
