@@ -1,11 +1,9 @@
-// let convertBtn = document.getElementById('convertBtn');
-// convertBtn.addEventListener('click', convertAndDownload);
 const fileInput = document.getElementById("fileInput");
 fileInput.addEventListener("change", function() {
 	convertAndDownload(fileInput.files);
 });
 
-if (const isTouch = () => ('ontouchstart' in window || navigator.maxTouchPoints)) {
+if (isTouch()) {
 	const clickPrompt = document.querySelector('#clickPrompt');
 	clickPrompt.textContent = clickPrompt.textContent.replace('click','tap');
 }
