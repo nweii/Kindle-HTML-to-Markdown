@@ -49,9 +49,6 @@ function kindleToMarkdown(doc) {
 title: ${title}
 author: ${authors}
 ---
-# *${title}*
-by ${authors}
-
 ## Highlights
 From *${title}* by ${authors}:
 
