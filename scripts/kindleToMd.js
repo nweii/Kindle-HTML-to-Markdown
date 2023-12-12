@@ -57,7 +57,7 @@ function kindleToMarkdown(doc) {
   let md = `---
 title: ${title}
 author: ${authors}
-aliases: ["${title} by ${authors}"]
+aliases: ['"${title}" by ${authors}']
 ---
 ## Highlights
 From *${title}* by ${authors}:
