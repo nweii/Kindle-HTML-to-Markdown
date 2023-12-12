@@ -44,7 +44,10 @@ function kindleToMarkdown(doc) {
   const container = doc
     .querySelector(".bodyContainer")
     .getElementsByTagName("div");
-  const title = doc.querySelector(".bookTitle").textContent.trim();
+  const title = doc
+    .querySelector(".bookTitle")
+    .textContent.trim()
+    .replace(/:/g, " - ");
   let authors = doc.querySelector(".authors").textContent.trim();
   if (authors.split(",").length === 2) {
     // If author leads with last name and if there's only 1 author, swap last & first names
