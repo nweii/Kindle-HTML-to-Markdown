@@ -63,7 +63,7 @@ aliases: ['"${title}" by ${authors}']
 From *${title}* by ${authors}:
 
 `;
-  // loop over each element in the document
+  // loop over each element in the document, adding items to the markdown file as it goes
   for (let el = 0; el < container.length; el++) {
     let tag = container[el];
     if (tag.className === "sectionHeading") {
