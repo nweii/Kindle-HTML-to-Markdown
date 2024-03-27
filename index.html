@@ -1,57 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Convert Kindle Highlights HTML to Markdown file</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Convert Kindle notebook HTMLs to a Markdown text files for Obsidian." />
+    <link rel="stylesheet" href="/assets/output.css" type="text/css" />
+    <script src="/scripts/file-saver-2.0.2-min.js"></script>
+  </head>
 
-<head>
-	<title>Convert Kindle Highlights HTML to Markdown file</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="description" content="Convert Kindle notebook HTMLs to a Markdown text files for Obsidian.">
-	<link rel="stylesheet" href="/assets/output.css" type="text/css">
-	<script src="/scripts/file-saver-2.0.2-min.js"></script>
-</head>
-
-<body class="flex flex-col items-center bg-stone-200 text-stone-900 dark:bg-slate-900 dark:text-slate-50">
-	<div class="flex flex-col gap-6 mx-5 my-5 max-w-screen-sm">
-		<div>
-			<h1>Convert Kindle Notebook HTML to Markdown</h1>
-			<p class="dark:text-white opacity-80 leading-relaxed">
-				Amazon's Kindle apps allow you to share book's highlights, notes, and bookmarks as an HTML file via email.
-			</p>
-			<p class="dark:text-white opacity-80 leading-relaxed">
-				This simple tool converts those HTMLs into Markdown text files perfect for <a href="https://obsidian.md/" target="_blank" class="no-underline font-semibold">Obsidian</a> and similar apps.
-			</p>
-		</div>
-		<div class="my-24">
-			<div id="dropzoneContainer" class="relative 
-			bg-stone-100/75 
-			hover:bg-stone-50 hover:scale-[1.02] 
-			dark:bg-slate-800/50 
-			hover:dark:bg-slate-800/70 
-			rounded-2xl 
-			shadow-xl hover:shadow-2xl 
-			shadow-stone-800/10 hover:shadow-sky-500/50 
-			dark:shadow-slate-900 hover:dark:shadow-sky-600/30 
-			transition duration-500">
-				<div id="dropzone" class="absolute inset-0 flex flex-col items-center justify-center p-12 motion-safe:animate-pulse">
-					<p id="dropPrompt" class="font-medium text-center form-label opacity-90">
-						Drop Kindle Notebook HTML(s) here to download as Markdown file(s)
-					</p>
-					<p id="clickPrompt" class="font-medium text-sm text-center form-label opacity-60">
-						or click to choose
-					</p>
-				</div>
-				<form id="primePicker" class="opacity-0 text-center">
-					<input id="fileInput" class="w-full form-input rounded-md shadow hover:shadow-lg transition mb-4 py-48 border-0 dark:bg-slate-800 text-sm" type="file" accept=".html" multiple>
-				</form>
-			</div>
-		</div>
-	</div>
-	<footer class="mt-12 text-sm w-full text-center px-5 pb-5 max-w-screen-sm flex flex-row justify-center items-center gap-2 text-stone-600 dark:text-slate-400">
-		<p><span class="text-xs">Made by</span> <a href="https://nathancheng.work/" target="_blank" class="font-semibold no-underline">Nathan Cheng</a></p>
-		<p>•</p>
-		<p><a href="https://www.buymeacoffee.com/nthnchng" target="_blank" class="font-semibold no-underline"><span class="dark:text-xs">💌</span></a></p>
-		<p>•</p>
-		<p><a href="https://github.com/nweii/Kindle-HTML-to-Markdown" target="_blank" class="font-semibold no-underline">Github</a> <span class="text-xs">(CC0‑1.0 license)</span></p>
-	</footer>
-	<script src="/scripts/kindleToMd.js"></script>
-</body>
+  <body
+    class="flex flex-col items-center bg-stone-200 text-stone-900 dark:bg-slate-900 dark:text-slate-50">
+    <div class="mx-5 my-5 flex max-w-screen-sm flex-col gap-6">
+      <div>
+        <h1>Convert Kindle Notebook HTML to Markdown</h1>
+        <p class="leading-relaxed opacity-80 dark:text-white">
+          Amazon's Kindle apps allow you to share book's highlights, notes, and
+          bookmarks as an HTML file via email.
+        </p>
+        <p class="leading-relaxed opacity-80 dark:text-white">
+          This simple tool converts those HTMLs into Markdown text files perfect
+          for
+          <a
+            href="https://obsidian.md/"
+            target="_blank"
+            class="font-semibold no-underline"
+            >Obsidian</a
+          >
+          and similar apps.
+        </p>
+      </div>
+      <div class="my-24">
+        <div
+          id="dropzoneContainer"
+          class="relative rounded-2xl bg-stone-100/75 shadow-xl shadow-stone-800/10 transition duration-500 hover:scale-[1.02] hover:bg-stone-50 hover:shadow-2xl hover:shadow-sky-500/50 dark:bg-slate-800/50 dark:shadow-slate-900 hover:dark:bg-slate-800/70 hover:dark:shadow-sky-600/30">
+          <div
+            id="dropzone"
+            class="absolute inset-0 flex flex-col items-center justify-center p-12 motion-safe:animate-pulse">
+            <p
+              id="dropPrompt"
+              class="form-label text-center font-medium opacity-90">
+              Drop Kindle Notebook HTML(s) here to download as Markdown file(s)
+            </p>
+            <p
+              id="clickPrompt"
+              class="form-label text-center text-sm font-medium opacity-60">
+              or click to choose
+            </p>
+          </div>
+          <form id="primePicker" class="text-center opacity-0">
+            <input
+              id="fileInput"
+              class="form-input mb-4 w-full rounded-md border-0 py-48 text-sm shadow transition hover:shadow-lg dark:bg-slate-800"
+              type="file"
+              accept=".html"
+              multiple />
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="mt-12 flex w-full max-w-screen-sm flex-row items-center justify-center gap-2 px-5 pb-5 text-center text-sm text-stone-600 dark:text-slate-400">
+      <p>
+        <span class="text-xs">Made by</span>
+        <a
+          href="https://nathancheng.work/"
+          target="_blank"
+          class="font-semibold no-underline"
+          >Nathan Cheng</a
+        >
+      </p>
+      <p>•</p>
+      <p>
+        <a
+          href="https://www.buymeacoffee.com/nthnchng"
+          target="_blank"
+          class="font-semibold no-underline"
+          ><span class="dark:text-xs">💌</span></a
+        >
+      </p>
+      <p>•</p>
+      <p>
+        <a
+          href="https://github.com/nweii/Kindle-HTML-to-Markdown"
+          target="_blank"
+          class="font-semibold no-underline"
+          >Github</a
+        >
+        <span class="text-xs">(CC0‑1.0 license)</span>
+      </p>
+    </footer>
+    <script src="/scripts/kindleToMd.js"></script>
+  </body>
+</html>
