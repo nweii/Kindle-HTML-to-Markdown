@@ -70,20 +70,20 @@ From *${title}* by ${authors}:
       // Format as Markdown H3 heading
       md += `### ${tag.textContent.trim()}\n`;
     } else if (tag.className === "noteHeading") {
-      // Notes and highlights are stored in the next sibling tag
+      // First see if this element is actually a bookmark
       if (tag.textContent.includes("Bookmark")) {
-        // Write bookmark indicator
+        // Write bookmark indicator + empty line
         md +=
           tag.textContent.trim().replace("Bookmark -", "*Bookmark* at") +
           "\n\n";
       } else {
-        // get note or highlight from contents of next element
+        // get note or highlight from contents of the next element
         const text = tag.nextElementSibling.textContent.trim();
         if (tag.textContent.includes("Note")) {
           // write note on new line
           md += `${text}\n\n`;
         } else if (tag.textContent.includes("Highlight")) {
-          // format as markdown quote
+          // write highlight on new line as markdown quote
           md += `> ${text}\n\n`;
         }
       }
