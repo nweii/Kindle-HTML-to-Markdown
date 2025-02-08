@@ -6,10 +6,9 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/static-build",
+      "use": "@vercel/node@18.x.x",
       "config": {
-        "distDir": "dist",
-        "nodeVersion": "18.x"
+        "distDir": "dist"
       }
     }
   ]
