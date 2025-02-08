@@ -4,3 +4,7 @@ waste/
 .nova
 .replit
 node_modules/
+.vscode
+node_modules
+.parcel-cache
+dist

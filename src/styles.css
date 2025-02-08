@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+h1 {
+  @apply mb-2 text-lg font-semibold;
+}
+p {
+  @apply mb-2;
+}
+a {
+  @apply underline underline-offset-2 transition duration-300 hover:text-sky-500 hover:dark:text-sky-100;
+}
