@@ -12,13 +12,13 @@
     <script src="../public/scripts/file-saver-2.0.2-min.js"></script>
   </head>
   <body
-    class="flex min-h-screen flex-col items-center bg-stone-100 px-5 py-5 text-stone-900 dark:bg-slate-900 dark:text-slate-200"
+    class="flex min-h-screen flex-col font-serif items-center bg-stone-100 px-5 py-5 text-stone-700 dark:bg-slate-950 dark:text-slate-300/90"
   >
     <main class="gap-25 flex max-w-xl grow flex-col">
       <div id="header" class="flex flex-col gap-4">
-        <h1 class="text-sm font-semibold">Turn Kindle Notes into Markdown</h1>
+        <h1 class="font-semibold">Turn Kindle Notes into Markdown</h1>
         <p
-          class="text-pretty max-w-[55ch] text-sm leading-relaxed dark:text-slate-300"
+          class="text-pretty max-w-[55ch] leading-relaxed"
         >
           Use your Kindle app to email your book's highlights and notes as an
           HTML file. Then drop it here to convert it into Markdown, perfect for
@@ -31,7 +31,7 @@
           and other note-taking apps.
         </p>
         <p
-          class="text-pretty max-w-[55ch] text-sm leading-relaxed opacity-80 dark:text-white"
+          class="text-pretty max-w-[55ch] leading-relaxed"
         >
           Your files never leave your computer—all conversion happens locally in
           your browser.
@@ -39,12 +39,13 @@
       </div>
       <div
         id="dropzoneContainer"
-        class="inset-shadow-sm inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33 dark:ring-slate-50/8 relative mb-auto rounded-2xl shadow-lg shadow-stone-800/10 ring ring-stone-800/5 transition duration-500 [background:var(--img-noise),linear-gradient(to_bottom,var(--color-stone-100)_33%,var(--color-stone-50)_100%)] hover:scale-[1.02] hover:shadow-xl hover:shadow-sky-500/20 dark:shadow-slate-900/80 dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)] hover:dark:shadow-sky-500/10"
+        class="inset-shadow-sm inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33 dark:ring-slate-50/8 relative mb-auto rounded-2xl shadow-lg shadow-stone-800/10 ring ring-stone-800/5 transition duration-500 [background:var(--img-noise),linear-gradient(to_bottom,var(--color-amber-100)_33%,var(--color-amber-50)_100%)] motion-safe:hover:scale-[1.02] hover:shadow-xl hover:shadow-yellow-500/20 dark:shadow-slate-900/80 dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)] hover:dark:shadow-sky-400/15"
       >
         <div
           id="dropzone"
-          class="absolute inset-0 flex flex-col items-center justify-center p-12 motion-safe:animate-pulse"
+          class="absolute inset-0 flex flex-col items-center justify-center p-12 gap-2"
         >
+        <svg class="motion-safe:animate-bounce" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-import"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
           <label
             for="fileInput"
             id="dropPrompt"
@@ -54,7 +55,7 @@
           </label>
           <p
             id="clickPrompt"
-            class="form-label text-center text-sm font-medium opacity-60"
+            class="form-label text-center text-sm font-medium opacity-80"
           >
             or click to choose files
           </p>
