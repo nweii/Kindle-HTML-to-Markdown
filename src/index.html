@@ -12,17 +12,16 @@
     <script src="../public/scripts/file-saver-2.0.2-min.js"></script>
   </head>
   <body
-    class="flex flex-col items-center bg-stone-200 px-5 py-5 text-stone-900 dark:bg-slate-900 dark:text-slate-200"
+    class="flex min-h-screen flex-col items-center bg-stone-100 px-5 py-5 text-stone-900 dark:bg-slate-900 dark:text-slate-200"
   >
-    <main class="h-fill h-dvh flex max-w-xl flex-col justify-between gap-4">
-      <div id="header" class="flex flex-col gap-4 pt-4">
+    <main class="gap-25 flex max-w-xl grow flex-col">
+      <div id="header" class="flex flex-col gap-4">
         <h1 class="text-sm font-semibold">Turn Kindle Notes into Markdown</h1>
         <p
           class="text-pretty max-w-[55ch] text-sm leading-relaxed dark:text-slate-300"
         >
-          Use your Kindle app to email your book's highlights and notes - you'll
-          receive an HTML file. Drop it here to convert it into Markdown perfect
-          for
+          Use your Kindle app to email your book's highlights and notes as an
+          HTML file. Then drop it here to convert it into Markdown, perfect for
           <a
             href="https://obsidian.md/"
             target="_blank"
@@ -34,13 +33,13 @@
         <p
           class="text-pretty max-w-[55ch] text-sm leading-relaxed opacity-80 dark:text-white"
         >
-          Your files never leave your computer - all conversion happens right in
+          Your files never leave your computer—all conversion happens locally in
           your browser.
         </p>
       </div>
       <div
         id="dropzoneContainer"
-        class="relative rounded-2xl bg-stone-100/75 shadow-xl shadow-stone-800/10 transition duration-500 hover:scale-[1.02] hover:bg-stone-50 hover:shadow-2xl hover:shadow-sky-500/50 dark:bg-slate-800/50 dark:shadow-slate-900 hover:dark:bg-slate-800/70 hover:dark:shadow-sky-600/30"
+        class="inset-shadow-sm inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33 dark:ring-slate-50/8 relative mb-auto rounded-2xl shadow-lg shadow-stone-800/10 ring ring-stone-800/5 transition duration-500 [background:var(--img-noise),linear-gradient(to_bottom,var(--color-stone-100)_33%,var(--color-stone-50)_100%)] hover:scale-[1.02] hover:shadow-xl hover:shadow-sky-500/20 dark:shadow-slate-900/80 dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)] hover:dark:shadow-sky-500/10"
       >
         <div
           id="dropzone"
