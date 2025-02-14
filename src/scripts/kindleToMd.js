@@ -3,6 +3,12 @@ fileInput.addEventListener("change", function () {
   convertAndDownload(fileInput.files);
 });
 
+// clicking the dropzone container also triggers the file input
+const dropzoneContainer = document.getElementById("dropzoneContainer");
+dropzoneContainer.addEventListener("click", () => {
+  fileInput.click();
+});
+
 if (isTouch()) {
   const clickPrompt = document.querySelector("#clickPrompt");
   clickPrompt.textContent = clickPrompt.textContent.replace("click", "tap");

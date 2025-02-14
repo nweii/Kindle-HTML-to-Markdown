@@ -13,7 +13,7 @@
       content="Convert Kindle notebook HTMLs to a Markdown text files for Obsidian."
     />
     <link rel="stylesheet" href="./styles.css" />
-    <script src="../public/scripts/file-saver-2.0.2-min.js"></script>
+    <script src="./scripts/file-saver-2.0.2-min.js"></script>
   </head>
   <body
     class="flex min-h-screen flex-col font-serif items-center bg-stone-100 px-5 py-5 text-stone-700 dark:bg-slate-950 dark:text-slate-300/90"
@@ -39,7 +39,7 @@
         >
           Your files never leave your computer—all conversion happens locally in
           your browser.
-        </p>
+        </p> 
       </div>
       <div
         id="dropzoneContainer"
@@ -64,10 +64,10 @@
             or click to choose files
           </p>
         </div>
-        <form id="primePicker" class="text-center opacity-0">
+        <form id="primePicker" class="text-center text-transparent">
           <input
             id="fileInput"
-            class="form-input mb-4 h-80 w-full rounded-md border-0 text-sm shadow transition hover:shadow-lg dark:bg-slate-800"
+            class="form-input h-80 w-full rounded-md focus-visible:border-2 border-transparent focus-visible:border-amber-500 dark:focus-visible:border-sky-600 focus-visible:rounded-2xl focus-visible:outline-none text-sm transition dark:bg-slate-800 shadow-none"
             type="file"
             accept=".html"
             multiple
