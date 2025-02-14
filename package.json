@@ -3,7 +3,8 @@
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel",
+    "start": "parcel src/index.html",
+    "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "clean": "rm -rf dist .parcel-cache"
   },
