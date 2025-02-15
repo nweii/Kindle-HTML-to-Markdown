@@ -53,24 +53,18 @@
       <div class="my-auto">
         <div
           id="dropzoneContainer"
-          class="relative inset-shadow-sm
-          inset-shadow-stone-500/10
-          dark:inset-shadow-slate-950/33
-          dark:ring-slate-50/8
+          class="relative 
           rounded-2xl
-          shadow-lg
-          shadow-stone-800/10
-          ring
-          ring-stone-900/10
-          transition
-          duration-500
           [background:var(--img-noise),linear-gradient(to_bottom,var(--color-amber-100)_33%,var(--color-amber-50)_100%)]
-          motion-safe:hover:scale-[1.02]
-          hover:shadow-xl
-          hover:shadow-yellow-500/20
-          dark:shadow-slate-900/80
           dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)]
-          hover:dark:shadow-sky-400/15"
+          has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-amber-500 dark:has-[input:focus-visible]:ring-sky-500 dark:has-[input:focus-visible]:ring-offset-slate-900
+          inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33 
+          ring ring-stone-900/10 dark:ring-slate-50/8 
+          inset-shadow-sm
+          shadow-lg shadow-stone-800/10 dark:shadow-slate-900/80 
+          transition duration-500
+          hover:shadow-xl hover:shadow-yellow-500/20 hover:dark:shadow-sky-400/15
+          motion-safe:hover:scale-[1.02]"
         >
           <div
             id="dropzone"
