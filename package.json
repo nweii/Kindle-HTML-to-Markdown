@@ -18,6 +18,6 @@
     "tailwindcss": "^4.0.4"
   },
   "dependencies": {
-    "file-saver": "^2.0.5"
+    "file-saver": "^2.0.2"
   }
 }
