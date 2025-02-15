@@ -4,10 +4,10 @@ fileInput.addEventListener("change", function () {
 });
 
 // clicking the dropzone container also triggers the file input
-const dropzoneContainer = document.getElementById("dropzoneContainer");
-dropzoneContainer.addEventListener("click", () => {
-  fileInput.click();
-});
+// const dropzoneContainer = document.getElementById("dropzoneContainer");
+// dropzoneContainer.addEventListener("click", () => {
+//   fileInput.click();
+// });
 
 if (isTouch()) {
   const clickPrompt = document.querySelector("#clickPrompt");

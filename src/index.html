@@ -39,48 +39,67 @@
         >
           Your files never leave your computer—all conversion happens locally in
           your browser.
-        </p> 
+        </p>
         <p
           class="text-pretty max-w-[55ch] leading-relaxed text-black dark:text-white"
         >
-          NOTE: During a visual overhaul I accidentally broke the conversion functionality. Please use the previous working version until I get this sorted out → <a
+          NOTE: The file import behavior in this version isn't working quite right. Please use the previous working version until I get this sorted out → <a
             href="https://kindlehtml-to-md-nweii.vercel.app/"
             target="_blank"
             class="font-semibold no-underline"
-            >Old Version</a
+            >Old Version</a>
         </p> 
       </div>
-      <div
-        id="dropzoneContainer"
-        class="inset-shadow-sm inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33 dark:ring-slate-50/8 relative mb-auto rounded-2xl shadow-lg shadow-stone-800/10 ring ring-stone-900/10 transition duration-500 [background:var(--img-noise),linear-gradient(to_bottom,var(--color-amber-100)_33%,var(--color-amber-50)_100%)] motion-safe:hover:scale-[1.02] hover:shadow-xl hover:shadow-yellow-500/20 dark:shadow-slate-900/80 dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)] hover:dark:shadow-sky-400/15"
-      >
+      <div class="my-auto">
         <div
-          id="dropzone"
-          class="absolute inset-0 flex flex-col items-center justify-center p-12 gap-2"
+          id="dropzoneContainer"
+          class="relative inset-shadow-sm
+          inset-shadow-stone-500/10
+          dark:inset-shadow-slate-950/33
+          dark:ring-slate-50/8
+          rounded-2xl
+          shadow-lg
+          shadow-stone-800/10
+          ring
+          ring-stone-900/10
+          transition
+          duration-500
+          [background:var(--img-noise),linear-gradient(to_bottom,var(--color-amber-100)_33%,var(--color-amber-50)_100%)]
+          motion-safe:hover:scale-[1.02]
+          hover:shadow-xl
+          hover:shadow-yellow-500/20
+          dark:shadow-slate-900/80
+          dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)]
+          hover:dark:shadow-sky-400/15"
         >
-        <svg class="motion-safe:animate-bounce" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-import"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
-          <label
-            id="dropPrompt"
-            class="form-label text-balance text-center font-medium opacity-90"
+          <div
+            id="dropzone"
+            class="absolute inset-0 flex flex-col items-center justify-center p-12"
           >
-            Drop your Kindle Notebook HTML(s) here to convert
-          </label>
-          <p
-            id="clickPrompt"
-            class="form-label text-center text-sm font-medium opacity-80"
-          >
-            or click to choose files
-          </p>
+          <svg class="motion-safe:animate-bounce" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-import"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+            <p
+              id="dropPrompt"
+              class="form-label text-center font-medium opacity-90"
+            >
+              Drop Kindle Notebook HTML(s) here to download as Markdown file(s)
+            </p>
+            <p
+              id="clickPrompt"
+              class="form-label text-center text-sm font-medium opacity-60"
+            >
+              or click to choose
+            </p>
+          </div>
+          <form id="primePicker" class="text-center opacity-0">
+            <input
+              id="fileInput"
+              class="form-input mb-4 w-full rounded-md border-0 py-48 text-sm shadow transition hover:shadow-lg dark:bg-slate-800"
+              type="file"
+              accept=".html"
+              multiple
+            />
+          </form>
         </div>
-        <form id="primePicker" class="text-center text-transparent">
-          <input
-            id="fileInput"
-            class="form-input h-80 w-full rounded-md focus-visible:border-2 border-transparent focus-visible:border-amber-500 dark:focus-visible:border-sky-600 focus-visible:rounded-2xl focus-visible:outline-none text-sm transition dark:bg-slate-800 shadow-none"
-            type="file"
-            accept=".html"
-            multiple
-          />
-        </form>
       </div>
       <footer
         class="flex w-full max-w-screen-sm flex-row items-center justify-between gap-2 text-center text-sm text-stone-600 dark:text-slate-400"
