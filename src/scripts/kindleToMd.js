@@ -1,6 +1,5 @@
-const fileInput = document.getElementById("fileInput");
-fileInput.addEventListener("change", function () {
-  convertAndDownload(fileInput.files);
+document.getElementById("fileInput").addEventListener("change", function () {
+  convertAndDownload();
 });
 
 // clicking the dropzone container also triggers the file input
