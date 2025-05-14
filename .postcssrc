@@ -1,5 +1,6 @@
 {
   "plugins": {
+    "postcss-discard-comments": { "removeAll": true },
     "@tailwindcss/postcss": {}
   }
 }
