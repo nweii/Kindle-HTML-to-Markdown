@@ -1,7 +1,5 @@
 {
   "plugins": {
-    "postcss-discard-comments": { "removeAll": true },
-    "@tailwindcss/postcss": {},
-    "cssnano": { "preset": ["default", { "discardComments": { "removeAll": true } }] }
+    "@tailwindcss/postcss": {}
   }
 }
