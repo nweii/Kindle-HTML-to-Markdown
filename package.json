@@ -5,8 +5,13 @@
   "scripts": {
     "start": "parcel src/index.html",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html --no-minify",
+    "build": "parcel build src/index.html",
     "clean": "rm -rf dist .parcel-cache"
+  },
+  "targets": {
+    "default": {
+      "optimize": false
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.5",
