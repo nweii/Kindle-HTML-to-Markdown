@@ -6,6 +6,6 @@
     ]
   },
   "optimizers": {
-    "*.css": ["@parcel/optimizer-css"]
+    "*.css": []
   }
 } 
