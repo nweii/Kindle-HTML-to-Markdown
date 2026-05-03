@@ -25,6 +25,7 @@ const status = $<HTMLParagraphElement>("templateStatus");
 let template = loadTemplate();
 templateInput.value = template;
 obsidianToggle.checked = loadOpenInObsidian();
+syncResetEnabled();
 
 if (isTouch()) {
   const clickPrompt = document.querySelector("#clickPrompt");
@@ -38,6 +39,7 @@ fileInput.addEventListener("change", () => convertAll());
 templateInput.addEventListener("input", () => {
   template = templateInput.value;
   saveTemplate(template);
+  syncResetEnabled();
 });
 
 obsidianToggle.addEventListener("change", () => {
@@ -48,6 +50,7 @@ resetBtn.addEventListener("click", () => {
   template = DEFAULT_TEMPLATE;
   templateInput.value = template;
   saveTemplate(template);
+  syncResetEnabled();
   flash("Template reset to default.");
 });
 
@@ -69,6 +72,7 @@ importFileInput.addEventListener("change", async () => {
     template = applied.template;
     templateInput.value = applied.template;
     obsidianToggle.checked = applied.openInObsidian;
+    syncResetEnabled();
     flash("Settings imported.");
   } catch (err) {
     flash(`Import failed: ${err instanceof Error ? err.message : String(err)}`, true);
@@ -119,6 +123,10 @@ function flash(message: string, isError = false): void {
     status.textContent = "";
     delete status.dataset.state;
   }, 4000);
+}
+
+function syncResetEnabled(): void {
+  resetBtn.disabled = template === DEFAULT_TEMPLATE;
 }
 
 function isTouch(): boolean {
