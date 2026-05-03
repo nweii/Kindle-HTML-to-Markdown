@@ -171,8 +171,7 @@
                 template that turns each Kindle file into Markdown. Edit it to
                 change what your <code>.md</code> files look like — changes are
                 saved to this device's browser (localStorage) automatically as
-                you type. Hit <strong>Reset to default</strong> if anything
-                breaks, or export to back up and share your template.
+                you type.
               </p>
               <details
                 class="group/cheat rounded-md bg-stone-100/70 p-2 dark:bg-slate-800/40"
@@ -196,7 +195,7 @@
                     <path d="m9 18 6-6-6-6" />
                   </svg>
                   <span class="relative top-px"
-                    >Template variables &amp; syntax cheat sheet</span
+                    >Template variables &amp; syntax reference</span
                   >
                 </summary>
                 <ul class="mt-2 ml-4 list-disc space-y-1 break-words">
@@ -239,18 +238,18 @@
               >Markdown output template</label
             >
             <div
-              class="relative rounded-md border border-stone-300 bg-white shadow-inner focus-within:ring-2 focus-within:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-within:ring-sky-500"
+              class="platter-inner-card relative border border-stone-300 bg-white shadow-inner focus-within:ring-2 focus-within:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-within:ring-sky-500"
             >
               <pre
                 id="templateHighlight"
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 m-0 overflow-hidden p-3 font-mono text-xs leading-relaxed break-words whitespace-pre-wrap"
+                class="pointer-events-none absolute inset-0 m-0 overflow-hidden p-3 font-mono text-base leading-relaxed break-words whitespace-pre-wrap sm:text-xs"
               ></pre>
               <textarea
                 id="templateInput"
                 spellcheck="false"
                 rows="14"
-                class="relative block w-full resize-y bg-transparent p-3 font-mono text-xs leading-relaxed break-words whitespace-pre-wrap text-transparent caret-stone-700 outline-none dark:caret-slate-200"
+                class="relative block w-full resize-y bg-transparent p-3 font-mono text-base leading-relaxed break-words whitespace-pre-wrap text-transparent caret-stone-700 outline-none sm:text-xs dark:caret-slate-200"
               ></textarea>
             </div>
             <div class="flex flex-wrap items-center gap-2">
@@ -258,7 +257,7 @@
                 id="templatePreview"
                 type="button"
                 aria-pressed="false"
-                class="flex items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
+                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +279,7 @@
               <button
                 id="templateReset"
                 type="button"
-                class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+                class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
               >
                 Reset to default
               </button>
@@ -288,14 +287,14 @@
                 <button
                   id="templateExport"
                   type="button"
-                  class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                  class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
                 >
                   Export settings
                 </button>
                 <button
                   id="templateImport"
                   type="button"
-                  class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                  class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
                 >
                   Import settings
                 </button>
