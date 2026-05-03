@@ -24,6 +24,8 @@ const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
 const previewBtn = $<HTMLButtonElement>("templatePreview");
 const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
 const copyBtn = $<HTMLButtonElement>("templateCopy");
+const copyIcon = $<SVGSVGElement & HTMLElement>("templateCopyIcon");
+const copyLabel = $<HTMLSpanElement>("templateCopyLabel");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const status = $<HTMLParagraphElement>("templateStatus");
 
@@ -75,10 +77,20 @@ previewBtn.addEventListener("click", () => {
   renderTemplateView();
 });
 
+const COPY_ICON_IDLE = `<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>`;
+const COPY_ICON_DONE = `<polyline points="20 6 9 17 4 12"/>`;
+let copyResetTimer: number | undefined;
+
 copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(template);
-    flash("Template copied to clipboard.");
+    copyIcon.innerHTML = COPY_ICON_DONE;
+    copyLabel.textContent = "Copied";
+    if (copyResetTimer) clearTimeout(copyResetTimer);
+    copyResetTimer = window.setTimeout(() => {
+      copyIcon.innerHTML = COPY_ICON_IDLE;
+      copyLabel.textContent = "Copy template";
+    }, 2000);
   } catch (err) {
     alert(`Couldn't copy: ${err instanceof Error ? err.message : String(err)}`);
   }
