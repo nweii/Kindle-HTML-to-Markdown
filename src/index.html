@@ -44,17 +44,17 @@
       </div>
 
       <!-- Platter: outer tray containing the dropzone (top) + customize panel (bottom).
-           Outer radius = inner dropzone radius + padding around it (16 + 20 = 36px) so the
-           two cards' curves stay concentric. -->
+           Concentric radii are auto-calculated in styles.css from --platter-radius
+           and --platter-padding (inner = outer - padding). Tweak --platter-radius
+           in styles.css to experiment. -->
       <div
-        class="rounded-[2.25rem] border border-stone-200 bg-stone-50/60 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+        class="platter border border-stone-200 bg-stone-50/60 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
       >
         <!-- Dropzone tray, nested on top of the platter. -->
-        <div class="p-5 pb-0">
+        <div class="platter-pad-no-bottom">
           <div
             id="dropzoneContainer"
-            class="relative
-            rounded-2xl
+            class="platter-inner-card relative
             [background:var(--img-noise),linear-gradient(to_bottom,var(--color-amber-100)_33%,var(--color-amber-50)_100%)]
             dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)]
             has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-amber-500 dark:has-[input:focus-visible]:ring-sky-500 dark:has-[input:focus-visible]:ring-offset-slate-900
@@ -117,7 +117,7 @@
         <!-- Customize panel, nested on the platter below the dropzone. -->
         <details id="templatePanel" class="group">
           <summary
-            class="flex cursor-pointer list-none items-center gap-2 p-5 text-sm font-medium select-none [&::-webkit-details-marker]:hidden"
+            class="platter-pad flex cursor-pointer list-none items-center gap-2 text-sm font-medium select-none [&::-webkit-details-marker]:hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +141,24 @@
               >Optional</span
             >
           </summary>
-          <div class="flex flex-col gap-4 px-5 pb-5 text-sm">
+          <div class="platter-pad-no-top flex flex-col gap-4 text-sm">
+            <div class="flex flex-col gap-1">
+              <label
+                class="flex cursor-pointer items-center gap-2 text-xs"
+                for="obsidianToggle"
+              >
+                <input
+                  id="obsidianToggle"
+                  type="checkbox"
+                  class="h-4 w-4 rounded border-stone-400 dark:border-slate-600"
+                />
+                Open results in Obsidian instead of downloading
+              </label>
+              <p class="ml-6 text-xs leading-relaxed opacity-60">
+                Uses <code>obsidian://new</code> to open files in your
+                last-active vault. Requires Obsidian.
+              </p>
+            </div>
             <div class="flex flex-col gap-2 text-xs leading-relaxed opacity-80">
               <p>
                 The textarea below is a
@@ -235,23 +252,6 @@
                 rows="14"
                 class="relative block w-full resize-y bg-transparent p-3 font-mono text-xs leading-relaxed break-words whitespace-pre-wrap text-transparent caret-stone-700 outline-none dark:caret-slate-200"
               ></textarea>
-            </div>
-            <div class="flex flex-col gap-1">
-              <label
-                class="flex cursor-pointer items-center gap-2 text-xs"
-                for="obsidianToggle"
-              >
-                <input
-                  id="obsidianToggle"
-                  type="checkbox"
-                  class="h-4 w-4 rounded border-stone-400 dark:border-slate-600"
-                />
-                Open results in Obsidian instead of downloading
-              </label>
-              <p class="ml-6 text-xs leading-relaxed opacity-60">
-                Uses <code>obsidian://new</code> to open files in your
-                last-active vault. Requires Obsidian.
-              </p>
             </div>
             <div class="flex flex-wrap items-center gap-2">
               <button

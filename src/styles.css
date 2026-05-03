@@ -17,6 +17,31 @@
   }
 }
 
+/* Platter card.
+   Tweak --platter-radius to experiment with the outer corner; the dropzone's
+   inner radius is derived automatically as (outer - padding) so the two cards
+   stay concentric. Padding is the second knob if you ever want to retune the
+   internal breathing room. */
+.platter {
+  --platter-radius: 2rem;
+  --platter-padding: 1rem;
+  border-radius: var(--platter-radius);
+}
+.platter-pad {
+  padding: var(--platter-padding);
+}
+.platter-pad-no-bottom {
+  padding: var(--platter-padding);
+  padding-bottom: 0;
+}
+.platter-pad-no-top {
+  padding: var(--platter-padding);
+  padding-top: 0;
+}
+.platter-inner-card {
+  border-radius: calc(var(--platter-radius) - var(--platter-padding));
+}
+
 a {
   @apply underline underline-offset-2 transition duration-300 hover:text-sky-500 hover:dark:text-sky-100;
 }
