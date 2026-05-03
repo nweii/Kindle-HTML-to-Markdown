@@ -9,9 +9,10 @@ import {
 } from "./template";
 import {
   buildObsidianUri,
-  loadOpenInObsidian,
+  loadOutputMode,
   loadTemplate,
-  saveOpenInObsidian,
+  type OutputMode,
+  saveOutputMode,
   saveTemplate,
 } from "./settings";
 
@@ -20,7 +21,8 @@ const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as 
 const fileInput = $<HTMLInputElement>("fileInput");
 const templateInput = $<HTMLTextAreaElement>("templateInput");
 const templateHighlight = $<HTMLPreElement>("templateHighlight");
-const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
+const outputModeSelect = $<HTMLSelectElement>("outputMode");
+const outputModeHelp = $<HTMLParagraphElement>("outputModeHelp");
 const previewBtn = $<HTMLButtonElement>("templatePreview");
 const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
 const copyBtn = $<HTMLButtonElement>("templateCopy");
@@ -29,11 +31,21 @@ const copyLabel = $<HTMLSpanElement>("templateCopyLabel");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const status = $<HTMLParagraphElement>("templateStatus");
 
+const OUTPUT_MODE_HELP: Record<OutputMode, string> = {
+  download: "A .md file downloads per book.",
+  clipboard:
+    "Copies the rendered Markdown to your clipboard. With multiple files, they're joined by --- separators.",
+  obsidian:
+    "Hands each file to Obsidian's obsidian://new URL handler in your last-active vault. Requires Obsidian.",
+};
+
 // Canonical template; the textarea is just a view of this (or its rendered preview).
 let template = loadTemplate();
 let mode: "edit" | "preview" = "edit";
+let outputMode: OutputMode = loadOutputMode();
 
-obsidianToggle.checked = loadOpenInObsidian();
+outputModeSelect.value = outputMode;
+syncOutputModeHelp();
 syncResetEnabled();
 renderTemplateView();
 
@@ -66,8 +78,10 @@ templateInput.addEventListener("scroll", () => {
   templateHighlight.scrollLeft = templateInput.scrollLeft;
 });
 
-obsidianToggle.addEventListener("change", () => {
-  saveOpenInObsidian(obsidianToggle.checked);
+outputModeSelect.addEventListener("change", () => {
+  outputMode = outputModeSelect.value as OutputMode;
+  saveOutputMode(outputMode);
+  syncOutputModeHelp();
 });
 
 previewBtn.addEventListener("click", () => {
@@ -134,12 +148,26 @@ async function convertAll(): Promise<void> {
     return;
   }
 
-  if (obsidianToggle.checked) {
+  if (outputMode === "obsidian") {
     for (const r of results) window.open(buildObsidianUri(r.fileName, r.content), "_blank");
     if (results.length > 1) {
       flash(
         `Sending ${results.length} files to Obsidian. If most don't open, allow popups for this site and retry.`,
       );
+    }
+  } else if (outputMode === "clipboard") {
+    const joined = results.map((r) => r.content).join("\n\n---\n\n");
+    try {
+      await navigator.clipboard.writeText(joined);
+      if (results.length === 1) {
+        alert(`"${results[0]!.fileName}" copied to your clipboard.`);
+      } else {
+        alert(
+          `${results.length} converted files copied to your clipboard, joined by --- separators.`,
+        );
+      }
+    } catch (err) {
+      alert(`Couldn't copy: ${err instanceof Error ? err.message : String(err)}`);
     }
   } else {
     for (const r of results) {
@@ -171,6 +199,10 @@ function clearStatus(): void {
 
 function syncResetEnabled(): void {
   resetBtn.disabled = template === DEFAULT_TEMPLATE;
+}
+
+function syncOutputModeHelp(): void {
+  outputModeHelp.textContent = OUTPUT_MODE_HELP[outputMode];
 }
 
 /** Render the current template as either editable source (edit mode) or rendered output (preview mode). */

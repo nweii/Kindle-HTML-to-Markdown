@@ -1,7 +1,9 @@
 import { DEFAULT_TEMPLATE } from "./template";
 
 const KEY_TEMPLATE = "kindleToMd.template";
-const KEY_OPEN_IN_OBSIDIAN = "kindleToMd.openInObsidian";
+const KEY_OUTPUT_MODE = "kindleToMd.outputMode";
+
+export type OutputMode = "download" | "clipboard" | "obsidian";
 
 export function loadTemplate(): string {
   // Empty string from localStorage (e.g. user cleared the textarea) falls back to default.
@@ -14,13 +16,15 @@ export function saveTemplate(template: string): void {
   else localStorage.setItem(KEY_TEMPLATE, template);
 }
 
-export function loadOpenInObsidian(): boolean {
-  return localStorage.getItem(KEY_OPEN_IN_OBSIDIAN) === "true";
+export function loadOutputMode(): OutputMode {
+  const v = localStorage.getItem(KEY_OUTPUT_MODE);
+  if (v === "clipboard" || v === "obsidian") return v;
+  return "download";
 }
 
-export function saveOpenInObsidian(value: boolean): void {
-  if (value) localStorage.setItem(KEY_OPEN_IN_OBSIDIAN, "true");
-  else localStorage.removeItem(KEY_OPEN_IN_OBSIDIAN);
+export function saveOutputMode(value: OutputMode): void {
+  if (value === "download") localStorage.removeItem(KEY_OUTPUT_MODE);
+  else localStorage.setItem(KEY_OUTPUT_MODE, value);
 }
 
 export function buildObsidianUri(fileName: string, content: string): string {
