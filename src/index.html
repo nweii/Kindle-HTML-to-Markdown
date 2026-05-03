@@ -159,81 +159,79 @@
                 last-active vault. Requires Obsidian.
               </p>
             </div>
-            <div class="flex flex-col gap-2 text-xs leading-relaxed opacity-80">
-              <p>
-                The textarea below is a
-                <a
-                  href="https://handlebarsjs.com/guide/"
-                  target="_blank"
-                  class="font-semibold"
-                  >Handlebars</a
-                >
-                template that turns each Kindle file into Markdown. Edit it to
-                change what your <code>.md</code> files look like — changes are
-                saved to this device's browser (localStorage) automatically as
-                you type.
-              </p>
-              <details
-                class="platter-inner-card group/cheat bg-stone-200/70 p-2 dark:bg-slate-800/70"
+            <p class="text-xs leading-relaxed opacity-80">
+              The textarea below is a
+              <a
+                href="https://handlebarsjs.com/guide/"
+                target="_blank"
+                class="font-semibold"
+                >Handlebars</a
               >
-                <summary
-                  class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+              template that turns each Kindle file into Markdown. Edit it to
+              change what your <code>.md</code> files look like — changes are
+              saved to this device's browser (localStorage) automatically as
+              you type.
+            </p>
+            <details
+              class="platter-inner-card group/cheat bg-stone-200/70 p-2 text-xs leading-relaxed opacity-80 dark:bg-slate-800/70"
+            >
+              <summary
+                class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0 transition-transform group-open/cheat:rotate-90"
+                  aria-hidden="true"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="shrink-0 transition-transform group-open/cheat:rotate-90"
-                    aria-hidden="true"
-                  >
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                  <span class="relative top-px"
-                    >Template variables &amp; syntax reference</span
-                  >
-                </summary>
-                <ul class="mt-2 ml-4 list-disc space-y-1 break-words">
-                  <li>
-                    <code>{{title}}</code> &middot; <code>{{author}}</code> —
-                    book metadata. For YAML aliases, wrap with
-                    <code>{{yamlEscape title}}</code> to escape apostrophes.
-                  </li>
-                  <li>
-                    <code>{{date}}</code> — the moment of conversion. Format
-                    with
-                    <code>{{formatDate date "yyyy-MM-dd"}}</code>; tokens:
-                    <code>yyyy</code> <code>yy</code> <code>MMMM</code>
-                    <code>MMM</code> <code>MM</code> <code>M</code>
-                    <code>dd</code> <code>d</code> <code>HH</code>
-                    <code>H</code> <code>mm</code> <code>m</code>
-                    <code>ss</code> <code>s</code>. Wrap literals in
-                    <code>[brackets]</code>, e.g.
-                    <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code>.
-                  </li>
-                  <li>
-                    <code>{{#each sections}} … {{/each}}</code> — repeat once
-                    per chapter. Inside the loop, <code>{{heading}}</code> is
-                    the chapter name and
-                    <code>{{#each entries}} … {{/each}}</code> loops over the
-                    highlights, notes, and bookmarks beneath it.
-                  </li>
-                  <li>
-                    Inside an entry: <code>{{text}}</code>,
-                    <code>{{location}}</code>, and <code>{{color}}</code>
-                    (highlights only). Use
-                    <code>{{#if (eq type "highlight")}} … {{/if}}</code> (or
-                    <code>"note"</code> / <code>"bookmark"</code>) to render
-                    only one kind of entry.
-                  </li>
-                </ul>
-              </details>
-            </div>
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+                <span class="relative top-px"
+                  >Template variables &amp; syntax reference</span
+                >
+              </summary>
+              <ul class="mt-2 ml-4 list-disc space-y-1 break-words">
+                <li>
+                  <code>{{title}}</code> &middot; <code>{{author}}</code> —
+                  book metadata. For YAML aliases, wrap with
+                  <code>{{yamlEscape title}}</code> to escape apostrophes.
+                </li>
+                <li>
+                  <code>{{date}}</code> — the moment of conversion. Format
+                  with
+                  <code>{{formatDate date "yyyy-MM-dd"}}</code>; tokens:
+                  <code>yyyy</code> <code>yy</code> <code>MMMM</code>
+                  <code>MMM</code> <code>MM</code> <code>M</code>
+                  <code>dd</code> <code>d</code> <code>HH</code>
+                  <code>H</code> <code>mm</code> <code>m</code>
+                  <code>ss</code> <code>s</code>. Wrap literals in
+                  <code>[brackets]</code>, e.g.
+                  <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code>.
+                </li>
+                <li>
+                  <code>{{#each sections}} … {{/each}}</code> — repeat once
+                  per chapter. Inside the loop, <code>{{heading}}</code> is
+                  the chapter name and
+                  <code>{{#each entries}} … {{/each}}</code> loops over the
+                  highlights, notes, and bookmarks beneath it.
+                </li>
+                <li>
+                  Inside an entry: <code>{{text}}</code>,
+                  <code>{{location}}</code>, and <code>{{color}}</code>
+                  (highlights only). Use
+                  <code>{{#if (eq type "highlight")}} … {{/if}}</code> (or
+                  <code>"note"</code> / <code>"bookmark"</code>) to render
+                  only one kind of entry.
+                </li>
+              </ul>
+            </details>
             <label for="templateInput" class="sr-only"
               >Markdown output template</label
             >
