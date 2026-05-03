@@ -23,6 +23,7 @@ const templateHighlight = $<HTMLPreElement>("templateHighlight");
 const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
 const previewBtn = $<HTMLButtonElement>("templatePreview");
 const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
+const copyBtn = $<HTMLButtonElement>("templateCopy");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const status = $<HTMLParagraphElement>("templateStatus");
 
@@ -74,7 +75,19 @@ previewBtn.addEventListener("click", () => {
   renderTemplateView();
 });
 
+copyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(template);
+    flash("Template copied to clipboard.");
+  } catch (err) {
+    alert(`Couldn't copy: ${err instanceof Error ? err.message : String(err)}`);
+  }
+});
+
 resetBtn.addEventListener("click", () => {
+  if (!confirm("Reset your template to the default? Your current template will be discarded.")) {
+    return;
+  }
   template = DEFAULT_TEMPLATE;
   saveTemplate(template);
   syncResetEnabled();

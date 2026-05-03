@@ -275,16 +275,40 @@
                 <span id="templatePreviewLabel">Preview output</span>
               </button>
               <button
-                id="templateReset"
+                id="templateCopy"
                 type="button"
-                class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
               >
-                Reset to default
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path
+                    d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                  />
+                </svg>
+                Copy template
               </button>
               <p
                 id="templateStatus"
                 class="text-xs opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
               ></p>
+              <button
+                id="templateReset"
+                type="button"
+                class="platter-inner-card ml-auto border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-500 shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+              >
+                Reset
+              </button>
             </div>
           </div>
         </details>
