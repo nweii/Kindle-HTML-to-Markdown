@@ -30,6 +30,12 @@
 .platter-pad {
   padding: var(--platter-padding);
 }
+.platter-pad-relaxed {
+  /* Same horizontal as the platter padding, but more vertical breathing room
+     for elements like the customize summary that need a comfortable click target. */
+  padding-block: 1rem;
+  padding-inline: var(--platter-padding);
+}
 .platter-pad-no-bottom {
   padding: var(--platter-padding);
   padding-bottom: 0;
