@@ -23,8 +23,8 @@
    stay concentric. Padding is the second knob if you ever want to retune the
    internal breathing room. */
 .platter {
-  --platter-radius: 2rem;
-  --platter-padding: 1rem;
+  --platter-radius: 1.75rem;
+  --platter-padding: 0.75rem;
   border-radius: var(--platter-radius);
 }
 .platter-pad {
