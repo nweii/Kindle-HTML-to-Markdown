@@ -1,6 +1,11 @@
 import { saveAs } from "file-saver";
 import { extractKindleData } from "./extract";
-import { DEFAULT_TEMPLATE, renderTemplate, tryCompileTemplate } from "./template";
+import {
+  DEFAULT_TEMPLATE,
+  highlightHandlebars,
+  renderTemplate,
+  tryCompileTemplate,
+} from "./template";
 import {
   buildObsidianUri,
   exportSettings,
@@ -15,6 +20,7 @@ const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as 
 
 const fileInput = $<HTMLInputElement>("fileInput");
 const templateInput = $<HTMLTextAreaElement>("templateInput");
+const templateHighlight = $<HTMLPreElement>("templateHighlight");
 const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const exportBtn = $<HTMLButtonElement>("templateExport");
@@ -26,6 +32,7 @@ let template = loadTemplate();
 templateInput.value = template;
 obsidianToggle.checked = loadOpenInObsidian();
 syncResetEnabled();
+syncHighlight();
 
 if (isTouch()) {
   const clickPrompt = document.querySelector("#clickPrompt");
@@ -41,12 +48,18 @@ templateInput.addEventListener("input", () => {
   template = templateInput.value;
   saveTemplate(template);
   syncResetEnabled();
+  syncHighlight();
   if (validateTimer) clearTimeout(validateTimer);
   validateTimer = window.setTimeout(() => {
     const error = tryCompileTemplate(template);
     if (error) flash(`Template error: ${error}`, true);
     else if (status.dataset.state === "error") clearStatus();
   }, 350);
+});
+
+templateInput.addEventListener("scroll", () => {
+  templateHighlight.scrollTop = templateInput.scrollTop;
+  templateHighlight.scrollLeft = templateInput.scrollLeft;
 });
 
 obsidianToggle.addEventListener("change", () => {
@@ -58,6 +71,7 @@ resetBtn.addEventListener("click", () => {
   templateInput.value = template;
   saveTemplate(template);
   syncResetEnabled();
+  syncHighlight();
   flash("Template reset to default.");
 });
 
@@ -80,6 +94,7 @@ importFileInput.addEventListener("change", async () => {
     templateInput.value = applied.template;
     obsidianToggle.checked = applied.openInObsidian;
     syncResetEnabled();
+    syncHighlight();
     flash("Settings imported.");
   } catch (err) {
     flash(`Import failed: ${err instanceof Error ? err.message : String(err)}`, true);
@@ -153,6 +168,15 @@ function clearStatus(): void {
 
 function syncResetEnabled(): void {
   resetBtn.disabled = template === DEFAULT_TEMPLATE;
+}
+
+function syncHighlight(): void {
+  // Textareas display the empty line after a trailing \n; <pre> doesn't, so pad with a space.
+  const v = templateInput.value;
+  const display = v.endsWith("\n") ? v + " " : v;
+  templateHighlight.innerHTML = highlightHandlebars(display);
+  templateHighlight.scrollTop = templateInput.scrollTop;
+  templateHighlight.scrollLeft = templateInput.scrollLeft;
 }
 
 function isTouch(): boolean {

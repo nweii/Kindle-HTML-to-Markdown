@@ -3,6 +3,7 @@ import { extractKindleData } from "../src/scripts/extract";
 import {
   DEFAULT_TEMPLATE,
   formatDate,
+  highlightHandlebars,
   renderTemplate,
   tryCompileTemplate,
 } from "../src/scripts/template";
@@ -101,6 +102,25 @@ describe("tryCompileTemplate", () => {
     const err = tryCompileTemplate("{{#if}}");
     expect(err).not.toBeNull();
     expect(err).not.toContain("\n");
+  });
+});
+
+describe("highlightHandlebars", () => {
+  test("wraps variable expressions in hb-var spans", () => {
+    expect(highlightHandlebars("hello {{title}}!")).toBe(
+      `hello <span class="hb-var">{{title}}</span>!`,
+    );
+  });
+
+  test("wraps block helpers and closers in hb-block spans", () => {
+    const html = highlightHandlebars("{{#each xs}}{{x}}{{/each}}");
+    expect(html).toContain(`<span class="hb-block">{{#each xs}}</span>`);
+    expect(html).toContain(`<span class="hb-var">{{x}}</span>`);
+    expect(html).toContain(`<span class="hb-block">{{/each}}</span>`);
+  });
+
+  test("escapes HTML entities outside tags", () => {
+    expect(highlightHandlebars("a < b & c")).toBe("a &lt; b &amp; c");
   });
 });
 

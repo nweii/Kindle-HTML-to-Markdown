@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* Subtle Handlebars syntax highlighting in the template editor. */
+.hb-var {
+  color: var(--color-sky-700);
+}
+.hb-block {
+  color: var(--color-violet-700);
+  font-weight: 500;
+}
+@media (prefers-color-scheme: dark) {
+  .hb-var {
+    color: var(--color-sky-400);
+  }
+  .hb-block {
+    color: var(--color-violet-300);
+  }
+}
+
 a {
   @apply underline underline-offset-2 transition duration-300 hover:text-sky-500 hover:dark:text-sky-100;
 }

@@ -58,6 +58,24 @@ export function tryCompileTemplate(template: string): string | null {
   }
 }
 
+const HB_TAG = /\{\{[#\/]?[^}]*\}\}/g;
+const HTML_ENTITIES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;" };
+
+/**
+ * Returns HTML for a Handlebars source string with each `{{…}}` tag wrapped in a
+ * span. Two classes: `hb-block` for `{{#…}}` / `{{/…}}` / `{{else}}`, `hb-var` for
+ * everything else. The output is meant to be set as `innerHTML` on a sibling
+ * element behind a transparent textarea.
+ */
+export function highlightHandlebars(src: string): string {
+  const escaped = src.replace(/[&<>]/g, (c) => HTML_ENTITIES[c] ?? c);
+  return escaped.replace(HB_TAG, (match) => {
+    const isBlock = /^\{\{[#/]/.test(match) || /^\{\{else\b/.test(match);
+    const cls = isBlock ? "hb-block" : "hb-var";
+    return `<span class="${cls}">${match}</span>`;
+  });
+}
+
 // Lightweight moment-style date formatter backed by browser Date methods.
 // Tokens: yyyy yy MMMM MMM MM M dd d HH H mm m ss s. Wrap literals in [brackets].
 export function formatDate(date: Date, format: string): string {
