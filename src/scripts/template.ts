@@ -30,9 +30,32 @@ handlebars.registerHelper("formatDate", (date: unknown, format: unknown) => {
   return formatDate(date, format);
 });
 
+let cachedSource: string | null = null;
+let cachedCompiled: HandlebarsTemplateDelegate | null = null;
+
 export function renderTemplate(data: KindleData, template: string = DEFAULT_TEMPLATE): string {
-  const compiled = handlebars.compile(template, { noEscape: true });
-  return compiled(data);
+  if (template !== cachedSource) {
+    cachedSource = template;
+    cachedCompiled = handlebars.compile(template, { noEscape: true });
+  }
+  return cachedCompiled!(data);
+}
+
+/**
+ * Compile and dry-run the template against a minimal sample to catch both compile-time
+ * and runtime errors (Handlebars compiles permissively but throws during render on
+ * mismatched blocks, helper exceptions, etc.). Returns a single-line error message on
+ * failure, or null on success.
+ */
+export function tryCompileTemplate(template: string): string | null {
+  try {
+    const compiled = handlebars.compile(template, { noEscape: true });
+    compiled({ title: "", author: "", date: new Date(), sections: [] });
+    return null;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return msg.split("\n")[0] ?? msg;
+  }
 }
 
 // Lightweight moment-style date formatter backed by browser Date methods.

@@ -10,7 +10,9 @@ export type ExportedSettings = {
 };
 
 export function loadTemplate(): string {
-  return localStorage.getItem(KEY_TEMPLATE) ?? DEFAULT_TEMPLATE;
+  // Empty string from localStorage (e.g. user cleared the textarea) falls back to default.
+  const stored = localStorage.getItem(KEY_TEMPLATE);
+  return stored && stored.length > 0 ? stored : DEFAULT_TEMPLATE;
 }
 
 export function saveTemplate(template: string): void {

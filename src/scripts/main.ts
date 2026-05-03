@@ -1,6 +1,6 @@
 import { saveAs } from "file-saver";
 import { extractKindleData } from "./extract";
-import { DEFAULT_TEMPLATE, renderTemplate } from "./template";
+import { DEFAULT_TEMPLATE, renderTemplate, tryCompileTemplate } from "./template";
 import {
   buildObsidianUri,
   exportSettings,
@@ -36,10 +36,17 @@ if (isTouch()) {
 
 fileInput.addEventListener("change", () => convertAll());
 
+let validateTimer: number | undefined;
 templateInput.addEventListener("input", () => {
   template = templateInput.value;
   saveTemplate(template);
   syncResetEnabled();
+  if (validateTimer) clearTimeout(validateTimer);
+  validateTimer = window.setTimeout(() => {
+    const error = tryCompileTemplate(template);
+    if (error) flash(`Template error: ${error}`, true);
+    else if (status.dataset.state === "error") clearStatus();
+  }, 350);
 });
 
 obsidianToggle.addEventListener("change", () => {
@@ -86,6 +93,8 @@ async function convertAll(): Promise<void> {
   if (!files || files.length === 0) return;
 
   const results: { fileName: string; content: string }[] = [];
+  const failures: string[] = [];
+
   for (const file of files) {
     try {
       const html = await file.text();
@@ -96,21 +105,36 @@ async function convertAll(): Promise<void> {
         content: md,
       });
     } catch (err) {
-      flash(
-        `Couldn't convert ${file.name}: ${err instanceof Error ? err.message : String(err)}`,
-        true,
-      );
-      return;
+      failures.push(`${file.name}: ${err instanceof Error ? err.message : String(err)}`);
     }
+  }
+
+  if (results.length === 0) {
+    flash(`No files converted. ${failures[0] ?? ""}`, true);
+    fileInput.value = "";
+    return;
   }
 
   if (obsidianToggle.checked) {
     for (const r of results) window.open(buildObsidianUri(r.fileName, r.content), "_blank");
+    if (results.length > 1) {
+      flash(
+        `Sending ${results.length} files to Obsidian. If most don't open, allow popups for this site and retry.`,
+      );
+    }
   } else {
     for (const r of results) {
       saveAs(new Blob([r.content], { type: "text/plain;charset=utf-8" }), r.fileName);
     }
   }
+
+  if (failures.length > 0) {
+    flash(
+      `${results.length} converted, ${failures.length} failed: ${failures[0]}`,
+      true,
+    );
+  }
+
   fileInput.value = "";
 }
 
@@ -119,10 +143,12 @@ function flash(message: string, isError = false): void {
   status.textContent = message;
   status.dataset.state = isError ? "error" : "ok";
   if (flashTimer) clearTimeout(flashTimer);
-  flashTimer = window.setTimeout(() => {
-    status.textContent = "";
-    delete status.dataset.state;
-  }, 4000);
+  flashTimer = window.setTimeout(clearStatus, 5000);
+}
+
+function clearStatus(): void {
+  status.textContent = "";
+  delete status.dataset.state;
 }
 
 function syncResetEnabled(): void {

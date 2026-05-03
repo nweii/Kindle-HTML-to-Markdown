@@ -1,6 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import { extractKindleData } from "../src/scripts/extract";
-import { DEFAULT_TEMPLATE, formatDate, renderTemplate } from "../src/scripts/template";
+import {
+  DEFAULT_TEMPLATE,
+  formatDate,
+  renderTemplate,
+  tryCompileTemplate,
+} from "../src/scripts/template";
 
 async function render(name: string, template: string = DEFAULT_TEMPLATE): Promise<string> {
   const html = await Bun.file(`${import.meta.dir}/fixtures/${name}`).text();
@@ -83,6 +88,19 @@ describe("custom templates", () => {
       `created: {{formatDate date "yyyy-MM-dd[T]HH:mm:ss"}}`,
     );
     expect(md).toBe("created: 2024-05-17T09:07:03");
+  });
+});
+
+describe("tryCompileTemplate", () => {
+  test("returns null for a valid template", () => {
+    expect(tryCompileTemplate("hello {{name}}")).toBeNull();
+    expect(tryCompileTemplate(DEFAULT_TEMPLATE)).toBeNull();
+  });
+
+  test("returns a single-line error message for malformed syntax", () => {
+    const err = tryCompileTemplate("{{#if}}");
+    expect(err).not.toBeNull();
+    expect(err).not.toContain("\n");
   });
 });
 
