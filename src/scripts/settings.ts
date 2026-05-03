@@ -3,12 +3,6 @@ import { DEFAULT_TEMPLATE } from "./template";
 const KEY_TEMPLATE = "kindleToMd.template";
 const KEY_OPEN_IN_OBSIDIAN = "kindleToMd.openInObsidian";
 
-export type ExportedSettings = {
-  version: 1;
-  template: string;
-  openInObsidian: boolean;
-};
-
 export function loadTemplate(): string {
   // Empty string from localStorage (e.g. user cleared the textarea) falls back to default.
   const stored = localStorage.getItem(KEY_TEMPLATE);
@@ -27,31 +21,6 @@ export function loadOpenInObsidian(): boolean {
 export function saveOpenInObsidian(value: boolean): void {
   if (value) localStorage.setItem(KEY_OPEN_IN_OBSIDIAN, "true");
   else localStorage.removeItem(KEY_OPEN_IN_OBSIDIAN);
-}
-
-export function exportSettings(): ExportedSettings {
-  return {
-    version: 1,
-    template: loadTemplate(),
-    openInObsidian: loadOpenInObsidian(),
-  };
-}
-
-export function importSettings(raw: unknown): { template: string; openInObsidian: boolean } {
-  if (typeof raw !== "object" || raw === null) {
-    throw new Error("Settings file must be a JSON object.");
-  }
-  const obj = raw as Record<string, unknown>;
-  if (obj.version !== 1) {
-    throw new Error(`Unsupported settings version: ${String(obj.version)}`);
-  }
-  if (typeof obj.template !== "string") {
-    throw new Error("Settings 'template' must be a string.");
-  }
-  const openInObsidian = obj.openInObsidian === true;
-  saveTemplate(obj.template);
-  saveOpenInObsidian(openInObsidian);
-  return { template: obj.template, openInObsidian };
 }
 
 export function buildObsidianUri(fileName: string, content: string): string {

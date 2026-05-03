@@ -9,8 +9,6 @@ import {
 } from "./template";
 import {
   buildObsidianUri,
-  exportSettings,
-  importSettings,
   loadOpenInObsidian,
   loadTemplate,
   saveOpenInObsidian,
@@ -26,9 +24,6 @@ const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
 const previewBtn = $<HTMLButtonElement>("templatePreview");
 const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
 const resetBtn = $<HTMLButtonElement>("templateReset");
-const exportBtn = $<HTMLButtonElement>("templateExport");
-const importBtn = $<HTMLButtonElement>("templateImport");
-const importFileInput = $<HTMLInputElement>("templateImportFile");
 const status = $<HTMLParagraphElement>("templateStatus");
 
 // Canonical template; the textarea is just a view of this (or its rendered preview).
@@ -85,33 +80,6 @@ resetBtn.addEventListener("click", () => {
   syncResetEnabled();
   renderTemplateView();
   flash("Template reset to default.");
-});
-
-exportBtn.addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify(exportSettings(), null, 2)], {
-    type: "application/json",
-  });
-  saveAs(blob, "kindle-to-md-settings.json");
-});
-
-importBtn.addEventListener("click", () => importFileInput.click());
-
-importFileInput.addEventListener("change", async () => {
-  const file = importFileInput.files?.[0];
-  if (!file) return;
-  try {
-    const parsed = JSON.parse(await file.text());
-    const applied = importSettings(parsed);
-    template = applied.template;
-    obsidianToggle.checked = applied.openInObsidian;
-    syncResetEnabled();
-    renderTemplateView();
-    flash("Settings imported.");
-  } catch (err) {
-    flash(`Import failed: ${err instanceof Error ? err.message : String(err)}`, true);
-  } finally {
-    importFileInput.value = "";
-  }
 });
 
 async function convertAll(): Promise<void> {
