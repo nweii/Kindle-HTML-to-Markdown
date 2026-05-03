@@ -91,6 +91,101 @@
           </form>
         </div>
       </div>
+
+      <details
+        id="templatePanel"
+        class="group rounded-xl border border-stone-200 bg-stone-50/60 px-5 py-3 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+      >
+        <summary
+          class="flex cursor-pointer list-none items-center justify-between gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+        >
+          <span class="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="transition-transform group-open:rotate-90"
+              ><path d="m9 18 6-6-6-6" /></svg
+            >
+            Customize output (advanced)
+          </span>
+          <span class="text-xs font-normal opacity-60">Optional</span>
+        </summary>
+        <div class="mt-4 flex flex-col gap-4">
+          <p class="text-xs leading-relaxed opacity-75">
+            Edit the
+            <a
+              href="https://handlebarsjs.com/guide/expressions.html"
+              target="_blank"
+              class="font-semibold"
+              >Handlebars</a
+            >
+            template below to control your output. Available variables:
+            <code>{{title}}</code>, <code>{{author}}</code>, <code>{{date}}</code>, and
+            <code>{{#each sections}}</code> with <code>heading</code> and
+            <code>entries</code> (each entry has <code>type</code>, <code>text</code>,
+            <code>location</code>, and <code>color</code> for highlights). Format dates
+            with <code>{{formatDate date "yyyy-MM-dd"}}</code>.
+          </p>
+          <textarea
+            id="templateInput"
+            spellcheck="false"
+            rows="14"
+            class="w-full resize-y rounded-md border border-stone-300 bg-white p-3 font-mono text-xs leading-relaxed shadow-inner outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-visible:ring-sky-500"
+          ></textarea>
+          <label
+            class="flex cursor-pointer items-center gap-2 text-xs"
+            for="obsidianToggle"
+          >
+            <input
+              id="obsidianToggle"
+              type="checkbox"
+              class="h-4 w-4 rounded border-stone-400 dark:border-slate-600"
+            />
+            Open results in Obsidian instead of downloading
+          </label>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              id="templateReset"
+              type="button"
+              class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+            >
+              Reset to default
+            </button>
+            <button
+              id="templateExport"
+              type="button"
+              class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+            >
+              Export settings
+            </button>
+            <button
+              id="templateImport"
+              type="button"
+              class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+            >
+              Import settings
+            </button>
+            <input
+              id="templateImportFile"
+              type="file"
+              accept="application/json,.json"
+              class="hidden"
+            />
+            <p
+              id="templateStatus"
+              class="text-xs opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
+            ></p>
+          </div>
+        </div>
+      </details>
+
       <footer
         class="flex w-full max-w-screen-sm flex-row items-center justify-between gap-2 text-center text-sm text-stone-600 dark:text-slate-400"
       >
