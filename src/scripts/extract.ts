@@ -22,7 +22,7 @@ export function extractKindleData(doc: Document): KindleData {
 
   if (!bodyContainer || !titleEl || !authorsEl) {
     throw new Error(
-      "Input does not look like a Kindle notebook export (missing .bodyContainer, .bookTitle, or .authors).",
+      "This file doesn't look like a Kindle notebook HTML export. In the Kindle app, use Share → Export Notes to get a compatible file.",
     );
   }
 

@@ -74,6 +74,6 @@ describe("extractKindleData", () => {
 
   test("throws on input that is not a Kindle export", () => {
     const doc = new DOMParser().parseFromString("<html><body>nope</body></html>", "text/html");
-    expect(() => extractKindleData(doc)).toThrow(/Kindle notebook export/);
+    expect(() => extractKindleData(doc)).toThrow(/Kindle notebook HTML export/);
   });
 });

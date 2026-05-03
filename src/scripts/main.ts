@@ -104,7 +104,7 @@ async function convertAll(): Promise<void> {
   }
 
   if (results.length === 0) {
-    flash(`No files converted. ${failures[0] ?? ""}`, true);
+    alert(`No files converted.\n\n${failures.join("\n\n")}`);
     fileInput.value = "";
     return;
   }
@@ -123,7 +123,9 @@ async function convertAll(): Promise<void> {
   }
 
   if (failures.length > 0) {
-    flash(`${results.length} converted, ${failures.length} failed: ${failures[0]}`, true);
+    alert(
+      `${results.length} file(s) converted. ${failures.length} couldn't be converted:\n\n${failures.join("\n\n")}`,
+    );
   }
 
   fileInput.value = "";
