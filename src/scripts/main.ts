@@ -4,6 +4,7 @@ import {
   DEFAULT_TEMPLATE,
   highlightHandlebars,
   renderTemplate,
+  SAMPLE_DATA,
   tryCompileTemplate,
 } from "./template";
 import {
@@ -22,17 +23,21 @@ const fileInput = $<HTMLInputElement>("fileInput");
 const templateInput = $<HTMLTextAreaElement>("templateInput");
 const templateHighlight = $<HTMLPreElement>("templateHighlight");
 const obsidianToggle = $<HTMLInputElement>("obsidianToggle");
+const previewBtn = $<HTMLButtonElement>("templatePreview");
+const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const exportBtn = $<HTMLButtonElement>("templateExport");
 const importBtn = $<HTMLButtonElement>("templateImport");
 const importFileInput = $<HTMLInputElement>("templateImportFile");
 const status = $<HTMLParagraphElement>("templateStatus");
 
+// Canonical template; the textarea is just a view of this (or its rendered preview).
 let template = loadTemplate();
-templateInput.value = template;
+let mode: "edit" | "preview" = "edit";
+
 obsidianToggle.checked = loadOpenInObsidian();
 syncResetEnabled();
-syncHighlight();
+renderTemplateView();
 
 if (isTouch()) {
   const clickPrompt = document.querySelector("#clickPrompt");
@@ -45,6 +50,7 @@ fileInput.addEventListener("change", () => convertAll());
 
 let validateTimer: number | undefined;
 templateInput.addEventListener("input", () => {
+  if (mode === "preview") return; // textarea is readonly in preview mode
   template = templateInput.value;
   saveTemplate(template);
   syncResetEnabled();
@@ -66,12 +72,18 @@ obsidianToggle.addEventListener("change", () => {
   saveOpenInObsidian(obsidianToggle.checked);
 });
 
+previewBtn.addEventListener("click", () => {
+  mode = mode === "edit" ? "preview" : "edit";
+  previewBtn.setAttribute("aria-pressed", mode === "preview" ? "true" : "false");
+  previewLabel.textContent = mode === "preview" ? "Back to editing" : "Preview output";
+  renderTemplateView();
+});
+
 resetBtn.addEventListener("click", () => {
   template = DEFAULT_TEMPLATE;
-  templateInput.value = template;
   saveTemplate(template);
   syncResetEnabled();
-  syncHighlight();
+  renderTemplateView();
   flash("Template reset to default.");
 });
 
@@ -91,10 +103,9 @@ importFileInput.addEventListener("change", async () => {
     const parsed = JSON.parse(await file.text());
     const applied = importSettings(parsed);
     template = applied.template;
-    templateInput.value = applied.template;
     obsidianToggle.checked = applied.openInObsidian;
     syncResetEnabled();
-    syncHighlight();
+    renderTemplateView();
     flash("Settings imported.");
   } catch (err) {
     flash(`Import failed: ${err instanceof Error ? err.message : String(err)}`, true);
@@ -144,10 +155,7 @@ async function convertAll(): Promise<void> {
   }
 
   if (failures.length > 0) {
-    flash(
-      `${results.length} converted, ${failures.length} failed: ${failures[0]}`,
-      true,
-    );
+    flash(`${results.length} converted, ${failures.length} failed: ${failures[0]}`, true);
   }
 
   fileInput.value = "";
@@ -168,6 +176,35 @@ function clearStatus(): void {
 
 function syncResetEnabled(): void {
   resetBtn.disabled = template === DEFAULT_TEMPLATE;
+}
+
+/** Render the current template as either editable source (edit mode) or rendered output (preview mode). */
+function renderTemplateView(): void {
+  if (mode === "edit") {
+    templateInput.value = template;
+    templateInput.readOnly = false;
+    syncHighlight();
+    return;
+  }
+  let preview: string;
+  try {
+    preview = renderTemplate(SAMPLE_DATA, template);
+  } catch (err) {
+    flash(
+      `Preview error: ${err instanceof Error ? (err.message.split("\n")[0] ?? "") : String(err)}`,
+      true,
+    );
+    mode = "edit";
+    previewBtn.setAttribute("aria-pressed", "false");
+    previewLabel.textContent = "Preview output";
+    renderTemplateView();
+    return;
+  }
+  templateInput.value = preview;
+  templateInput.readOnly = true;
+  // In preview, render plain text (no Handlebars highlighting — there are no tags).
+  templateHighlight.textContent = preview.endsWith("\n") ? preview + " " : preview;
+  templateHighlight.scrollTop = templateInput.scrollTop = 0;
 }
 
 function syncHighlight(): void {

@@ -23,7 +23,7 @@
   <body
     class="flex min-h-screen flex-col items-center bg-stone-100 px-5 py-5 font-serif text-stone-700 dark:bg-slate-950 dark:text-slate-300/90"
   >
-    <main class="flex max-w-2xl grow flex-col gap-12">
+    <main class="flex w-full max-w-2xl grow flex-col gap-12">
       <div id="header" class="flex flex-col gap-4">
         <h1 class="font-semibold">Turn your Kindle Notes into Markdown</h1>
         <p class="text-pretty max-w-[55ch] leading-relaxed">
@@ -43,9 +43,11 @@
         </p>
       </div>
 
-      <!-- Platter: outer tray that contains the dropzone (top) + customize panel (bottom). -->
+      <!-- Platter: outer tray containing the dropzone (top) + customize panel (bottom).
+           Outer radius = inner dropzone radius + padding around it (16 + 20 = 36px) so the
+           two cards' curves stay concentric. -->
       <div
-        class="rounded-xl border border-stone-200 bg-stone-50/60 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+        class="rounded-[2.25rem] border border-stone-200 bg-stone-50/60 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
       >
         <!-- Dropzone tray, nested on top of the platter. -->
         <div class="p-5 pb-0">
@@ -180,7 +182,7 @@
                     >Template variables &amp; syntax cheat sheet</span
                   >
                 </summary>
-                <ul class="mt-2 ml-4 list-disc space-y-1">
+                <ul class="mt-2 ml-4 list-disc space-y-1 break-words">
                   <li>
                     <code>{{title}}</code> &middot; <code>{{author}}</code> —
                     book metadata. For YAML aliases, wrap with
@@ -252,6 +254,29 @@
               </p>
             </div>
             <div class="flex flex-wrap items-center gap-2">
+              <button
+                id="templatePreview"
+                type="button"
+                aria-pressed="false"
+                class="flex items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span id="templatePreviewLabel">Preview output</span>
+              </button>
               <button
                 id="templateReset"
                 type="button"

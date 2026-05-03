@@ -1,6 +1,46 @@
 import Handlebars from "handlebars";
 import type { KindleData } from "./extract";
 
+/** Realistic-looking data used by the in-app preview toggle. */
+export const SAMPLE_DATA: KindleData = {
+  title: "Thinking, Fast and Slow",
+  author: "Daniel Kahneman",
+  date: new Date(2024, 4, 17, 10, 30),
+  sections: [
+    {
+      heading: "Part 1: Two Systems",
+      entries: [
+        {
+          type: "highlight",
+          text: "System 1 operates automatically and quickly, with little or no effort and no sense of voluntary control.",
+          location: "Chapter 1 > Page 19 · Location 285",
+          color: "Yellow",
+        },
+        {
+          type: "note",
+          text: "Compare with System 2 description in the next chapter.",
+          location: "Chapter 1 > Page 19 · Location 286",
+        },
+        {
+          type: "bookmark",
+          location: "Chapter 1 > Page 21 · Location 312",
+        },
+      ],
+    },
+    {
+      heading: "Part 2: Heuristics and Biases",
+      entries: [
+        {
+          type: "highlight",
+          text: "The illusion of validity persists even when its falsity is recognized.",
+          location: "Chapter 4 > Page 86 · Location 1450",
+          color: "Pink",
+        },
+      ],
+    },
+  ],
+};
+
 export const DEFAULT_TEMPLATE = `---
 title: {{title}}
 author: {{author}}
