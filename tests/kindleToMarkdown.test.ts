@@ -13,15 +13,15 @@ describe("kindleToMarkdown", () => {
     expect(md).not.toContain("Kahneman, Daniel");
   });
 
-  test("preserves multi-author lists without swapping", async () => {
+  test("does not swap two authors in 'First Last, First Last' format", async () => {
     const md = kindleToMarkdown(await parseFixture("multi-author.html"));
-    expect(md).toContain("author: Martin Kleppmann, Alice Author, Bob Author");
+    expect(md).toContain("author: Martin Kleppmann, Some Coauthor");
   });
 
-  test("replaces ':' in titles for filesystem safety", async () => {
+  test("collapses ':' in titles to ' - ' without leaving double spaces", async () => {
     const md = kindleToMarkdown(await parseFixture("all-entry-types.html"));
-    expect(md).toMatch(/^title: The Pragmatic Programmer.*Your Journey to Mastery$/m);
-    expect(md).not.toMatch(/^title:.*:/m);
+    expect(md).toContain("title: You Don't Know JS - Scope & Closures");
+    expect(md).not.toMatch(/  /); // no double spaces anywhere in output
   });
 
   test("emits YAML frontmatter with title, author, and aliases", async () => {
@@ -29,6 +29,12 @@ describe("kindleToMarkdown", () => {
     expect(md).toMatch(
       /^---\ntitle: Thinking, Fast and Slow\nauthor: Daniel Kahneman\naliases: \['"Thinking, Fast and Slow" by Daniel Kahneman'\]\n---/,
     );
+  });
+
+  test("escapes apostrophes in the YAML aliases line", async () => {
+    const md = kindleToMarkdown(await parseFixture("all-entry-types.html"));
+    // Single-quoted YAML strings escape ' as ''
+    expect(md).toContain(`aliases: ['"You Don''t Know JS - Scope & Closures" by Kyle Simpson']`);
   });
 
   test("renders section headings as H3", async () => {
@@ -52,6 +58,34 @@ describe("kindleToMarkdown", () => {
   test("renders bookmarks with location prefix", async () => {
     const md = kindleToMarkdown(await parseFixture("all-entry-types.html"));
     expect(md).toMatch(/\*Bookmark\* at Chapter 2 > Page 25 · Location 410/);
+  });
+
+  test("handles modern Kindle format with annotation color spans", async () => {
+    const md = kindleToMarkdown(await parseFixture("modern-format.html"));
+    expect(md).toContain("title: Trick Mirror - Reflections on Self-Delusion");
+    expect(md).toContain("author: Jia Tolentino");
+    expect(md).toContain("### Introduction");
+    expect(md).toContain(
+      "> When I feel confused about something, I write about it until I turn into the person who shows up on paper.",
+    );
+    expect(md).toContain("*Bookmark* at Page 65 · Location 1023");
+    expect(md).toContain(
+      "> Figuring out how to \"get better\" at being a woman is a ridiculous and often amoral project.",
+    );
+  });
+
+  test("produces valid frontmatter for an export with no entries", async () => {
+    const md = kindleToMarkdown(await parseFixture("empty-body.html"));
+    expect(md).toContain("title: Empty Book");
+    expect(md).toContain("author: Anonymous");
+    expect(md).toContain("## Highlights");
+  });
+
+  test("does not crash when a noteHeading has no following noteText sibling", async () => {
+    const md = kindleToMarkdown(await parseFixture("missing-note-text.html"));
+    expect(md).toContain("title: Truncated Export");
+    // Highlight with no body emits an empty blockquote rather than throwing
+    expect(md).toContain("> \n");
   });
 
   test("throws on input that is not a Kindle export", () => {

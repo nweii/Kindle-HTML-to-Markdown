@@ -10,17 +10,19 @@ export function kindleToMarkdown(doc: Document): string {
   }
 
   const container = bodyContainer.getElementsByTagName("div");
-  const title = titleEl.textContent!.trim().replace(/:/g, " - ");
+  const title = titleEl.textContent!.trim().replace(/\s*:\s*/g, " - ");
   let authors = authorsEl.textContent!.trim();
-  if (authors.split(",").length === 2) {
-    // Single author exported as "Last, First" — swap to "First Last"
-    authors = authors.replace(/(.+),(.+)/u, "$2 $1").trim();
+  const authorParts = authors.split(",").map((s) => s.trim());
+  if (authorParts.length === 2 && !/\s/.test(authorParts[0]!)) {
+    // Single author exported as "Last, First Middle" — swap to "First Middle Last".
+    // Skip when first part has whitespace (indicates a real "First Last, First Last" co-author list).
+    authors = `${authorParts[1]} ${authorParts[0]}`;
   }
 
   let md = `---
 title: ${title}
 author: ${authors}
-aliases: ['"${title}" by ${authors}']
+aliases: ['"${yamlSingleQuoteEscape(title)}" by ${yamlSingleQuoteEscape(authors)}']
 ---
 ## Highlights
 From *${title}* by ${authors}:
@@ -46,4 +48,9 @@ From *${title}* by ${authors}:
     }
   }
   return md;
+}
+
+// In single-quoted YAML strings, a literal apostrophe is escaped by doubling it.
+function yamlSingleQuoteEscape(s: string): string {
+  return s.replace(/'/g, "''");
 }
