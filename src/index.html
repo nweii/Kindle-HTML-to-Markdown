@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Kindle Notebook to Markdown converter</title>
+    <title>kindle2md · Convert Kindle highlights to Markdown</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
     name="title"
-    content="Convert Kindle Highlights HTML to Markdown file"
+    content="kindle2md — Convert Kindle highlights to Markdown"
     />
     <meta
       name="description"
-      content="Convert Kindle notebook HTMLs to a Markdown text files for Obsidian."
+      content="Convert your Kindle notebook HTML exports into Markdown notes for Obsidian and other note-taking apps. Runs entirely in your browser."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,6 +46,168 @@
           your browser.
         </p>
       </div>
+
+      <details
+        id="templatePanel"
+        class="group rounded-xl border border-stone-200 bg-stone-50/60 p-5 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+      >
+        <summary
+          class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="shrink-0 transition-transform group-open:rotate-90"
+            aria-hidden="true"
+            ><path d="m9 18 6-6-6-6" /></svg
+          >
+          <span class="relative top-px grow leading-none"
+            >Customize output (advanced)</span
+          >
+          <span class="relative top-px text-xs font-normal leading-none opacity-60"
+            >Optional</span
+          >
+        </summary>
+        <div class="mt-4 flex flex-col gap-4">
+          <div class="flex flex-col gap-2 text-xs leading-relaxed opacity-80">
+            <p>
+              The textarea below is a
+              <a
+                href="https://handlebarsjs.com/guide/"
+                target="_blank"
+                class="font-semibold"
+                >Handlebars</a
+              >
+              template that turns each Kindle file into Markdown. Edit it to
+              change what your <code>.md</code> files look like — changes are
+              saved to this device's browser (localStorage) automatically as you
+              type. Hit <strong>Reset to default</strong> if anything breaks, or
+              export to back up and share your template.
+            </p>
+            <details class="group/cheat rounded-md bg-stone-100/70 p-2 dark:bg-slate-800/40">
+              <summary
+                class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0 transition-transform group-open/cheat:rotate-90"
+                  aria-hidden="true"
+                  ><path d="m9 18 6-6-6-6" /></svg
+                >
+                <span class="relative top-px"
+                  >Template variables &amp; syntax cheat sheet</span
+                >
+              </summary>
+              <ul class="mt-2 ml-4 list-disc space-y-1">
+                <li>
+                  <code>{{title}}</code> &middot; <code>{{author}}</code> — book
+                  metadata. For YAML aliases, wrap with
+                  <code>{{yamlEscape title}}</code> to escape apostrophes.
+                </li>
+                <li>
+                  <code>{{date}}</code> — the moment of conversion. Format with
+                  <code>{{formatDate date "yyyy-MM-dd"}}</code>; tokens:
+                  <code>yyyy</code> <code>yy</code> <code>MMMM</code>
+                  <code>MMM</code> <code>MM</code> <code>M</code>
+                  <code>dd</code> <code>d</code> <code>HH</code> <code>H</code>
+                  <code>mm</code> <code>m</code> <code>ss</code> <code>s</code>.
+                  Wrap literals in <code>[brackets]</code>, e.g.
+                  <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code>.
+                </li>
+                <li>
+                  <code>{{#each sections}} … {{/each}}</code> — repeat once per
+                  chapter. Inside the loop, <code>{{heading}}</code> is the
+                  chapter name and <code>{{#each entries}} … {{/each}}</code>
+                  loops over the highlights, notes, and bookmarks beneath it.
+                </li>
+                <li>
+                  Inside an entry: <code>{{text}}</code>,
+                  <code>{{location}}</code>, and <code>{{color}}</code>
+                  (highlights only). Use
+                  <code>{{#if (eq type "highlight")}} … {{/if}}</code> (or
+                  <code>"note"</code> / <code>"bookmark"</code>) to render only
+                  one kind of entry.
+                </li>
+              </ul>
+            </details>
+          </div>
+          <label for="templateInput" class="sr-only">Markdown output template</label>
+          <textarea
+            id="templateInput"
+            spellcheck="false"
+            rows="14"
+            class="w-full resize-y rounded-md border border-stone-300 bg-white p-3 font-mono text-xs leading-relaxed shadow-inner outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-visible:ring-sky-500"
+          ></textarea>
+          <div class="flex flex-col gap-1">
+            <label
+              class="flex cursor-pointer items-center gap-2 text-xs"
+              for="obsidianToggle"
+            >
+              <input
+                id="obsidianToggle"
+                type="checkbox"
+                class="h-4 w-4 rounded border-stone-400 dark:border-slate-600"
+              />
+              Open results in Obsidian instead of downloading
+            </label>
+            <p class="ml-6 text-xs leading-relaxed opacity-60">
+              Uses <code>obsidian://new</code> to open files in your last-active
+              vault. Requires Obsidian.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              id="templateReset"
+              type="button"
+              class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+            >
+              Reset to default
+            </button>
+            <div class="flex gap-2">
+              <button
+                id="templateExport"
+                type="button"
+                class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+              >
+                Export settings
+              </button>
+              <button
+                id="templateImport"
+                type="button"
+                class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+              >
+                Import settings
+              </button>
+            </div>
+            <input
+              id="templateImportFile"
+              type="file"
+              accept="application/json,.json"
+              class="hidden"
+            />
+            <p
+              id="templateStatus"
+              class="text-xs opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
+            ></p>
+          </div>
+        </div>
+      </details>
+
       <div class="my-0">
         <div
           id="dropzoneContainer"
@@ -92,145 +254,6 @@
         </div>
       </div>
 
-      <details
-        id="templatePanel"
-        class="group rounded-xl border border-stone-200 bg-stone-50/60 px-5 py-3 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
-      >
-        <summary
-          class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="shrink-0 transition-transform group-open:rotate-90"
-            aria-hidden="true"
-            ><path d="m9 18 6-6-6-6" /></svg
-          >
-          <span class="grow leading-none">Customize output (advanced)</span>
-          <span class="text-xs font-normal leading-none opacity-60">Optional</span>
-        </summary>
-        <div class="mt-4 flex flex-col gap-4">
-          <div class="flex flex-col gap-2 text-xs leading-relaxed opacity-80">
-            <p>
-              The textarea below is a
-              <a
-                href="https://handlebarsjs.com/guide/"
-                target="_blank"
-                class="font-semibold"
-                >Handlebars</a
-              >
-              template that turns each Kindle file into Markdown. Edit it to change
-              what your <code>.md</code> files look like — changes are saved to
-              this device's browser (localStorage) automatically as you type.
-              Hit <strong>Reset to default</strong> if anything breaks, or
-              export to back up and share your template.
-            </p>
-            <details class="rounded-md bg-stone-100/70 p-2 dark:bg-slate-800/40">
-              <summary class="cursor-pointer font-medium select-none">
-                Template variables &amp; syntax cheat sheet
-              </summary>
-              <ul class="mt-2 ml-4 list-disc space-y-1">
-                <li>
-                  <code>{{title}}</code> &middot; <code>{{author}}</code> — book
-                  metadata. For YAML aliases, wrap with
-                  <code>{{yamlEscape title}}</code> to escape apostrophes.
-                </li>
-                <li>
-                  <code>{{date}}</code> — the moment of conversion. Format with
-                  <code>{{formatDate date "yyyy-MM-dd"}}</code>; tokens:
-                  <code>yyyy</code> <code>yy</code> <code>MMMM</code>
-                  <code>MMM</code> <code>MM</code> <code>M</code>
-                  <code>dd</code> <code>d</code> <code>HH</code> <code>H</code>
-                  <code>mm</code> <code>m</code> <code>ss</code> <code>s</code>.
-                  Wrap literals in <code>[brackets]</code>, e.g.
-                  <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code>.
-                </li>
-                <li>
-                  <code>{{#each sections}} … {{/each}}</code> — repeat once per
-                  chapter. Inside the loop, <code>{{heading}}</code> is the
-                  chapter name and <code>{{#each entries}} … {{/each}}</code>
-                  loops over the highlights, notes, and bookmarks beneath it.
-                </li>
-                <li>
-                  Inside an entry: <code>{{text}}</code>, <code>{{location}}</code>,
-                  and <code>{{color}}</code> (highlights only). Use
-                  <code>{{#if (eq type "highlight")}} … {{/if}}</code> (or
-                  <code>"note"</code> / <code>"bookmark"</code>) to render only
-                  one kind of entry.
-                </li>
-              </ul>
-            </details>
-          </div>
-          <label for="templateInput" class="sr-only">Markdown output template</label>
-          <textarea
-            id="templateInput"
-            spellcheck="false"
-            rows="14"
-            class="w-full resize-y rounded-md border border-stone-300 bg-white p-3 font-mono text-xs leading-relaxed shadow-inner outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-visible:ring-sky-500"
-          ></textarea>
-          <div class="flex flex-col gap-1">
-            <label
-              class="flex cursor-pointer items-center gap-2 text-xs"
-              for="obsidianToggle"
-            >
-              <input
-                id="obsidianToggle"
-                type="checkbox"
-                class="h-4 w-4 rounded border-stone-400 dark:border-slate-600"
-              />
-              Open results in Obsidian instead of downloading
-            </label>
-            <p class="ml-6 text-xs leading-relaxed opacity-60">
-              Hands each converted note off via Obsidian's
-              <code>obsidian://new</code> URL handler, which opens the file in
-              your last-active vault. Requires Obsidian to be installed.
-            </p>
-          </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <button
-              id="templateReset"
-              type="button"
-              class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
-            >
-              Reset to default
-            </button>
-            <div class="flex gap-2">
-              <button
-                id="templateExport"
-                type="button"
-                class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
-              >
-                Export settings
-              </button>
-              <button
-                id="templateImport"
-                type="button"
-                class="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
-              >
-                Import settings
-              </button>
-            </div>
-            <input
-              id="templateImportFile"
-              type="file"
-              accept="application/json,.json"
-              class="hidden"
-            />
-            <p
-              id="templateStatus"
-              class="text-xs opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
-            ></p>
-          </div>
-        </div>
-      </details>
-
       <footer
         class="flex w-full max-w-screen-sm flex-row items-center justify-between gap-2 text-center text-sm text-stone-600 dark:text-slate-400"
       >
@@ -256,7 +279,7 @@
         <p>•</p>
         <p>
           <a
-            href="https://github.com/nweii/Kindle-HTML-to-Markdown"
+            href="https://github.com/nweii/kindle2md"
             target="_blank"
             class="font-semibold no-underline"
             >Github</a

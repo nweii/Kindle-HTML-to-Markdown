@@ -1,5 +1,5 @@
 {
-  "name": "kindle-to-md-converter",
+  "name": "kindle2md",
   "private": true,
   "type": "module",
   "scripts": {
