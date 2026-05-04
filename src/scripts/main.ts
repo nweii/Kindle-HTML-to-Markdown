@@ -135,7 +135,6 @@ resetBtn.addEventListener("click", () => {
   saveTemplate(template);
   syncResetEnabled();
   renderTemplateView();
-  flash("Template reset to default.");
 });
 
 async function convertAll(): Promise<void> {
