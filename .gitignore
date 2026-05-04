@@ -1,9 +1,22 @@
+# Build output
+dist
+coverage/
+
+# Dependencies
+node_modules/
+
+# Local-only directories
 Examples/
 waste/
+
+# OS / editor cruft
 .DS_Store
 .nova
 .replit
-node_modules/
 .vscode
-dist
 .cursor/
+.idea/
+
+# Env files (defensive — no env vars in use today, but cheap insurance)
+.env
+.env.*
