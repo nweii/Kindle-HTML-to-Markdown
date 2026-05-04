@@ -137,9 +137,6 @@
             <span class="relative top-px grow leading-none"
               >Customize output (advanced)</span
             >
-            <span class="relative top-px text-xs font-normal leading-none opacity-60"
-              >Optional</span
-            >
           </summary>
           <div class="platter-pad-no-top flex flex-col gap-4 text-sm">
             <div class="flex flex-col gap-1">
@@ -202,6 +199,7 @@
                   class="rounded bg-white/70 p-2 text-stone-700 dark:bg-slate-700/40 dark:text-slate-200"
                 >
                   <p class="font-medium">Want help iterating?</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <button
                     id="aiPromptCopy"
                     type="button"
@@ -219,6 +217,7 @@
 
                 <section>
                   <p class="font-medium">Inserting values</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <p class="mt-0.5">
                     Wrap a name in double curly braces. Built-in values:
                   </p>
@@ -236,6 +235,7 @@
 
                 <section>
                   <p class="font-medium">Looping over chapters &amp; entries</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <p class="mt-0.5">
                     <code>{{#each sections}} … {{/each}}</code> repeats its
                     inner block once per chapter. Inside the loop:
@@ -271,6 +271,7 @@
 
                 <section>
                   <p class="font-medium">Showing only one kind of entry</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <p class="mt-0.5">
                     Combine <code>{{#if}}</code> with the <code>eq</code>
                     helper to render just highlights (or just notes,
@@ -283,6 +284,7 @@
 
                 <section>
                   <p class="font-medium">Formatting dates</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <p class="mt-0.5">
                     Pass <code>{{date}}</code> to the
                     <code>formatDate</code> helper with a format string:
@@ -329,6 +331,7 @@
 
                 <section>
                   <p class="font-medium">YAML-safe text</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
                   <p class="mt-0.5">
                     If you embed a value inside a single-quoted YAML string
                     (the default <code>aliases</code> field does this), wrap
