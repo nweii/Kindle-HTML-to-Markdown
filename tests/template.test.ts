@@ -107,27 +107,36 @@ describe("tryCompileTemplate", () => {
 });
 
 describe("buildAiPrompt", () => {
-  test("embeds the user's current template inside a handlebars code block", () => {
+  test("embeds the user's current template inside a handlebars code block when edited", () => {
     const userTemplate = "# {{title}}\n\n{{#each sections}}- {{heading}}\n{{/each}}";
     const prompt = buildAiPrompt(userTemplate);
     expect(prompt).toContain("## My current template");
     expect(prompt).toContain("```handlebars\n" + userTemplate + "\n```");
   });
 
-  test("embeds the default template as a baseline", () => {
+  test("skips the 'My current template' section when it equals the default", () => {
+    const prompt = buildAiPrompt(DEFAULT_TEMPLATE);
+    expect(prompt).not.toContain("## My current template");
+    // Still includes the default template so the AI has the baseline
+    expect(prompt).toContain(DEFAULT_TEMPLATE);
+    // And signals that the user is starting from the default
+    expect(prompt).toContain("haven't edited it yet");
+  });
+
+  test("embeds the default template as a baseline (when user has edits)", () => {
     const prompt = buildAiPrompt("anything");
     expect(prompt).toContain("## Default template (reference baseline)");
     expect(prompt).toContain(DEFAULT_TEMPLATE);
   });
 
   test("explicitly asks the AI to respond with a handlebars code block", () => {
-    const prompt = buildAiPrompt("");
+    const prompt = buildAiPrompt("anything");
     expect(prompt).toContain("```handlebars");
     expect(prompt).toMatch(/inside a.*```handlebars.*code block/);
   });
 
   test("documents only the three custom helpers (eq, yamlEscape, formatDate)", () => {
-    const prompt = buildAiPrompt("");
+    const prompt = buildAiPrompt("anything");
     expect(prompt).toContain("(eq A B)");
     expect(prompt).toContain("yamlEscape");
     expect(prompt).toContain("formatDate");

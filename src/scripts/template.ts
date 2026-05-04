@@ -134,18 +134,22 @@ Standard Handlebars rules apply ({{var}}, {{#each}}, {{#if}}, {{#unless}}, etc.)
   - ss → 09, s → 9
   - Wrap literal characters in [brackets] so they aren't interpreted as tokens, e.g. yyyy-MM-dd[T]HH:mm → 2024-01-05T08:04.
 
-## Default template (reference baseline)
+## ${currentTemplate === DEFAULT_TEMPLATE ? "Default template (I haven't edited it yet — I'm starting from this)" : "Default template (reference baseline)"}
 
 \`\`\`handlebars
 ${DEFAULT_TEMPLATE}
 \`\`\`
-
+${
+  currentTemplate === DEFAULT_TEMPLATE
+    ? ""
+    : `
 ## My current template
 
 \`\`\`handlebars
 ${currentTemplate}
 \`\`\`
-
+`
+}
 ## Sample input (so you can reason about the output without seeing real Kindle HTML)
 
 \`\`\`json
