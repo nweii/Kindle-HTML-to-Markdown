@@ -139,7 +139,7 @@
             >
           </summary>
           <div class="platter-pad-no-top flex flex-col gap-4 text-sm">
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-2">
               <label class="font-medium" for="outputMode"
                 >When conversion finishes</label
               >
@@ -169,178 +169,6 @@
               saved to this device's browser (localStorage) automatically as
               you type.
             </p>
-            <details
-              class="platter-inner-card group/cheat bg-white/50 p-2 leading-relaxed opacity-80 dark:bg-slate-800/40"
-            >
-              <summary
-                class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="shrink-0 transition-transform group-open/cheat:rotate-90"
-                  aria-hidden="true"
-                >
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-                <span class="relative top-px"
-                  >Template variables &amp; syntax reference</span
-                >
-              </summary>
-              <div class="mt-3 flex flex-col gap-3 break-words">
-                <section
-                  class="rounded bg-white/70 p-2 text-stone-700 dark:bg-slate-700/40 dark:text-slate-200"
-                >
-                  <button
-                    id="aiPromptCopy"
-                    type="button"
-                    class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
-                  >
-                    <span id="aiPromptCopyLabel">Copy AI prompt</span>
-                  </button>
-                  <p class="mt-2">
-                    Copies a self-contained prompt with the data shape,
-                    helpers, default template, and your current edits (when
-                    you've made any) — paste into any chat assistant for
-                    help tweaking it.
-                  </p>
-                </section>
-
-                <section>
-                  <p class="font-medium">Inserting values</p>
-                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
-                  <p class="mt-0.5">
-                    Wrap a name in double curly braces. Built-in values:
-                  </p>
-                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
-                    <li><code>{{title}}</code> — the book's title</li>
-                    <li>
-                      <code>{{author}}</code> — the author or author list
-                    </li>
-                    <li>
-                      <code>{{date}}</code> — the moment of conversion (use
-                      the <code>formatDate</code> helper below to render it)
-                    </li>
-                  </ul>
-                </section>
-
-                <section>
-                  <p class="font-medium">Looping over chapters &amp; entries</p>
-                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
-                  <p class="mt-0.5">
-                    <code>{{#each sections}} … {{/each}}</code> repeats its
-                    inner block once per chapter. Inside the loop:
-                  </p>
-                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
-                    <li>
-                      <code>{{heading}}</code> — the chapter name (may be
-                      empty for entries before any heading)
-                    </li>
-                    <li>
-                      <code>{{#each entries}} … {{/each}}</code> — repeats
-                      once per highlight, note, or bookmark
-                    </li>
-                  </ul>
-                  <p class="mt-1">Inside an entry:</p>
-                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
-                    <li>
-                      <code>{{type}}</code> — <code>"highlight"</code>,
-                      <code>"note"</code>, or <code>"bookmark"</code>
-                    </li>
-                    <li>
-                      <code>{{text}}</code> — the highlighted or noted text
-                    </li>
-                    <li>
-                      <code>{{location}}</code> — Kindle's location string
-                      (e.g. <code>Chapter 1 &gt; Page 19 · Location 285</code>)
-                    </li>
-                    <li>
-                      <code>{{color}}</code> — only present for highlights
-                    </li>
-                  </ul>
-                </section>
-
-                <section>
-                  <p class="font-medium">Showing only one kind of entry</p>
-                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
-                  <p class="mt-0.5">
-                    Combine <code>{{#if}}</code> with the <code>eq</code>
-                    helper to render just highlights (or just notes,
-                    bookmarks):
-                  </p>
-                  <pre
-                    class="mt-1 overflow-x-auto rounded bg-white/70 p-2 dark:bg-slate-700/40"
-                  ><code><span class="hb-block">{{#if (eq type "highlight")}}</span>&gt; <span class="hb-var">{{text}}</span><span class="hb-block">{{/if}}</span></code></pre>
-                </section>
-
-                <section>
-                  <p class="font-medium">Formatting dates</p>
-                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
-                  <p class="mt-0.5">
-                    Pass <code>{{date}}</code> to the
-                    <code>formatDate</code> helper with a format string:
-                  </p>
-                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
-                    <li>
-                      <code>{{formatDate date "yyyy-MM-dd"}}</code> →
-                      <code>2024-01-05</code>
-                    </li>
-                    <li>
-                      <code>{{formatDate date "MMMM d, yyyy"}}</code> →
-                      <code>January 5, 2024</code>
-                    </li>
-                    <li>
-                      <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code> →
-                      <code>2024-01-05T08:04</code>
-                    </li>
-                  </ul>
-                  <p class="mt-1">
-                    Wrap literal characters in <code>[brackets]</code> so they
-                    aren't treated as tokens (the <code>T</code> in ISO
-                    timestamps, for example).
-                  </p>
-                  <p class="mt-2 font-medium">
-                    Tokens (examples for Jan 5, 2024 at 08:04:09):
-                  </p>
-                  <dl class="mt-1 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-                    <dt><code>yyyy</code> · <code>yy</code></dt>
-                    <dd>year — <code>2024</code> · <code>24</code></dd>
-                    <dt><code>MMMM</code> · <code>MMM</code></dt>
-                    <dd>month name — <code>January</code> · <code>Jan</code></dd>
-                    <dt><code>MM</code> · <code>M</code></dt>
-                    <dd>month number — <code>01</code> · <code>1</code></dd>
-                    <dt><code>dd</code> · <code>d</code></dt>
-                    <dd>day of month — <code>05</code> · <code>5</code></dd>
-                    <dt><code>HH</code> · <code>H</code></dt>
-                    <dd>hour (24h) — <code>08</code> · <code>8</code></dd>
-                    <dt><code>mm</code> · <code>m</code></dt>
-                    <dd>minute — <code>04</code> · <code>4</code></dd>
-                    <dt><code>ss</code> · <code>s</code></dt>
-                    <dd>second — <code>09</code> · <code>9</code></dd>
-                  </dl>
-                </section>
-
-                <section>
-                  <p class="font-medium">YAML-safe text</p>
-                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
-                  <p class="mt-0.5">
-                    If you embed a value inside a single-quoted YAML string
-                    (the default <code>aliases</code> field does this), wrap
-                    it with <code>{{yamlEscape …}}</code> to double any
-                    apostrophes — otherwise titles like
-                    <em>Surely You're Joking, Mr. Feynman!</em> break the
-                    YAML parser.
-                  </p>
-                </section>
-              </div>
-            </details>
             <label for="templateInput" class="sr-only"
               >Markdown output template</label
             >
@@ -437,6 +265,175 @@
                 </svg>
               </button>
             </div>
+            <details
+              class="platter-inner-card group/cheat bg-white/50 p-3 leading-relaxed opacity-80 dark:bg-slate-800/40"
+            >
+              <summary
+                class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0 transition-transform group-open/cheat:rotate-90"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+                <span class="relative top-px"
+                  >Template variables &amp; syntax reference</span
+                >
+              </summary>
+              <div class="mt-3 flex flex-col gap-6 wrap-break-word">
+                <section
+                >
+                  <button
+                    id="aiPromptCopy"
+                    type="button"
+                    class="platter-inner-card border border-stone-300 bg-white px-3 py-1 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                  >
+                    <span id="aiPromptCopyLabel" class="text-xs">Copy AI prompt</span>
+                  </button>
+                  <p class="mt-2">
+                    Copies a self-contained prompt with the data shape,
+                    helpers, template reference, and your current edits (if any). Paste into any chat assistant for help tweaking it.
+                  </p>
+                </section>
+
+                <section>
+                  <p class="font-medium">Inserting values</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
+                  <p class="mt-0.5">
+                    Wrap a name in double curly braces. Built-in values:
+                  </p>
+                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
+                    <li><code>{{title}}</code> — the book's title</li>
+                    <li>
+                      <code>{{author}}</code> — the author or author list
+                    </li>
+                    <li>
+                      <code>{{date}}</code> — the moment of conversion (use
+                      the <code>formatDate</code> helper below to render it)
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <p class="font-medium">Looping over chapters &amp; entries</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
+                  <p class="mt-0.5">
+                    <code>{{#each sections}} … {{/each}}</code> repeats its
+                    inner block once per chapter. Inside the loop:
+                  </p>
+                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
+                    <li>
+                      <code>{{heading}}</code> — the chapter name (may be
+                      empty for entries before any heading)
+                    </li>
+                    <li>
+                      <code>{{#each entries}} … {{/each}}</code> — repeats
+                      once per highlight, note, or bookmark
+                    </li>
+                  </ul>
+                  <p class="mt-1">Inside an entry:</p>
+                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
+                    <li>
+                      <code>{{type}}</code> — <code>"highlight"</code>,
+                      <code>"note"</code>, or <code>"bookmark"</code>
+                    </li>
+                    <li>
+                      <code>{{text}}</code> — the highlighted or noted text
+                    </li>
+                    <li>
+                      <code>{{location}}</code> — Kindle's location string
+                      (e.g. <code>Chapter 1 &gt; Page 19 · Location 285</code>)
+                    </li>
+                    <li>
+                      <code>{{color}}</code> — only present for highlights
+                    </li>
+                  </ul>
+                </section>
+
+                <section>
+                  <p class="font-medium">Showing only one kind of entry</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
+                  <p class="mt-0.5">
+                    Combine <code>{{#if}}</code> with the <code>eq</code>
+                    helper to render just highlights (or just notes,
+                    bookmarks):
+                  </p>
+                  <pre
+                    class="mt-1 overflow-x-auto rounded-md bg-white/70 p-2 dark:bg-slate-700/40"
+                  ><code><span class="hb-block">{{#if (eq type "highlight")}}</span>&gt; <span class="hb-var">{{text}}</span><span class="hb-block">{{/if}}</span></code></pre>
+                </section>
+
+                <section>
+                  <p class="font-medium">Formatting dates</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
+                  <p class="mt-0.5">
+                    Pass <code>{{date}}</code> to the
+                    <code>formatDate</code> helper with a format string:
+                  </p>
+                  <ul class="mt-1 ml-4 list-disc space-y-0.5">
+                    <li>
+                      <code>{{formatDate date "yyyy-MM-dd"}}</code> →
+                      <code>2024-01-05</code>
+                    </li>
+                    <li>
+                      <code>{{formatDate date "MMMM d, yyyy"}}</code> →
+                      <code>January 5, 2024</code>
+                    </li>
+                    <li>
+                      <code>{{formatDate date "yyyy-MM-dd[T]HH:mm"}}</code> →
+                      <code>2024-01-05T08:04</code>
+                    </li>
+                  </ul>
+                  <p class="mt-1">
+                    Wrap literal characters in <code>[brackets]</code> so they
+                    aren't treated as tokens (the <code>T</code> in ISO
+                    timestamps, for example).
+                  </p>
+                  <p class="mt-2 font-medium">
+                    Tokens (examples for Jan 5, 2024 at 08:04:09):
+                  </p>
+                  <dl class="mt-1 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+                    <dt><code>yyyy</code> · <code>yy</code></dt>
+                    <dd>year — <code>2024</code> · <code>24</code></dd>
+                    <dt><code>MMMM</code> · <code>MMM</code></dt>
+                    <dd>month name — <code>January</code> · <code>Jan</code></dd>
+                    <dt><code>MM</code> · <code>M</code></dt>
+                    <dd>month number — <code>01</code> · <code>1</code></dd>
+                    <dt><code>dd</code> · <code>d</code></dt>
+                    <dd>day of month — <code>05</code> · <code>5</code></dd>
+                    <dt><code>HH</code> · <code>H</code></dt>
+                    <dd>hour (24h) — <code>08</code> · <code>8</code></dd>
+                    <dt><code>mm</code> · <code>m</code></dt>
+                    <dd>minute — <code>04</code> · <code>4</code></dd>
+                    <dt><code>ss</code> · <code>s</code></dt>
+                    <dd>second — <code>09</code> · <code>9</code></dd>
+                  </dl>
+                </section>
+
+                <section>
+                  <p class="font-medium">YAML-safe text</p>
+                  <hr class="my-2 border-stone-300/50 dark:border-slate-500/40" />
+                  <p class="mt-0.5">
+                    If you embed a value inside a single-quoted YAML string
+                    (the default <code>aliases</code> field does this), wrap
+                    it with <code>{{yamlEscape …}}</code> to double any
+                    apostrophes — otherwise titles like
+                    <em>Surely You're Joking, Mr. Feynman!</em> break the
+                    YAML parser.
+                  </p>
+                </section>
+              </div>
+            </details>
           </div>
         </details>
       </div>

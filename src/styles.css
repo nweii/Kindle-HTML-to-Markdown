@@ -56,7 +56,7 @@
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 0.875rem center;
+  background-position: right 0.5rem center;
   background-size: 16px 16px;
 }
 @media (prefers-color-scheme: dark) {
@@ -67,6 +67,17 @@
 
 a {
   @apply underline underline-offset-2 transition duration-300 hover:text-sky-500 hover:dark:text-sky-100;
+}
+
+/* Inline <code> reads visually larger than surrounding serif text because the
+   default monospace font is wider. Shrink to 0.875em so it lands at roughly
+   the same optical size. <code> inside <pre> (the reference example block,
+   the editor overlay) keeps the parent's font-size. */
+code {
+  font-size: 0.875em;
+}
+pre code {
+  font-size: inherit;
 }
 
 @theme {
