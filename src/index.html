@@ -157,7 +157,7 @@
               ></p>
             </div>
             <p class="leading-relaxed opacity-80">
-              The textarea below is a
+              The text area below is a
               <a
                 href="https://handlebarsjs.com/guide/"
                 target="_blank"
@@ -165,9 +165,8 @@
                 >Handlebars</a
               >
               template that turns each Kindle file into Markdown. Edit it to
-              change what your <code>.md</code> files look like — changes are
-              saved to this device's browser (localStorage) automatically as
-              you type.
+              change how your <code>.md</code> files look. Changes are
+              saved to your browser automatically as you type.
             </p>
             <label for="templateInput" class="sr-only"
               >Markdown output template</label
@@ -178,13 +177,13 @@
               <pre
                 id="templateHighlight"
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 m-0 overflow-hidden p-3 font-mono text-base leading-relaxed break-words whitespace-pre-wrap sm:text-xs"
+                class="pointer-events-none absolute inset-0 m-0 overflow-hidden p-3 font-mono text-base leading-relaxed wrap-break-word whitespace-pre-wrap sm:text-xs"
               ></pre>
               <textarea
                 id="templateInput"
                 spellcheck="false"
                 rows="14"
-                class="relative block w-full resize-y bg-transparent p-3 font-mono text-base leading-relaxed break-words whitespace-pre-wrap text-transparent caret-stone-700 outline-none sm:text-xs dark:caret-slate-200"
+                class="relative block w-full resize-y bg-transparent p-3 font-mono text-base leading-relaxed wrap-break-word whitespace-pre-wrap text-transparent caret-stone-700 outline-none sm:text-xs dark:caret-slate-200"
               ></textarea>
             </div>
             <div class="flex flex-wrap items-center gap-2">
@@ -266,7 +265,7 @@
               </button>
             </div>
             <details
-              class="platter-inner-card group/cheat bg-white/50 p-3 leading-relaxed opacity-80 dark:bg-slate-800/40"
+              class="platter-inner-card group/cheat bg-white/50 px-3 py-1.5 leading-relaxed opacity-80 dark:bg-slate-800/40"
             >
               <summary
                 class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
@@ -298,7 +297,7 @@
                     type="button"
                     class="platter-inner-card border border-stone-300 bg-white px-3 py-1 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
                   >
-                    <span id="aiPromptCopyLabel" class="text-xs">Copy AI prompt</span>
+                    <span id="aiPromptCopyLabel">Copy AI prompt</span>
                   </button>
                   <p class="mt-2">
                     Copies a self-contained prompt with the data shape,
