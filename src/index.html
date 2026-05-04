@@ -198,6 +198,46 @@
                 >
               </summary>
               <div class="mt-3 flex flex-col gap-3 break-words">
+                <section
+                  class="rounded bg-stone-50/80 p-2 text-stone-700 dark:bg-slate-900/50 dark:text-slate-200"
+                >
+                  <p class="font-medium">Want help iterating with an AI?</p>
+                  <p class="mt-0.5">
+                    Copies a self-contained prompt to your clipboard with the
+                    template's data shape, helpers, the default template, your
+                    current template, and sample data — paste into Claude,
+                    ChatGPT, etc.
+                  </p>
+                  <button
+                    id="aiPromptCopy"
+                    type="button"
+                    class="platter-inner-card mt-2 flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                  >
+                    <svg
+                      id="aiPromptCopyIcon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+                      />
+                      <path d="M20 3v4" />
+                      <path d="M22 5h-4" />
+                      <path d="M4 17v2" />
+                      <path d="M5 18H3" />
+                    </svg>
+                    <span id="aiPromptCopyLabel">Copy AI prompt</span>
+                  </button>
+                </section>
+
                 <section>
                   <p class="font-medium">Inserting values</p>
                   <p class="mt-0.5">

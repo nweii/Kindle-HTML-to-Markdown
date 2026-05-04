@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { extractKindleData } from "../src/scripts/extract";
 import {
+  buildAiPrompt,
   DEFAULT_TEMPLATE,
   formatDate,
   highlightHandlebars,
@@ -102,6 +103,35 @@ describe("tryCompileTemplate", () => {
     const err = tryCompileTemplate("{{#if}}");
     expect(err).not.toBeNull();
     expect(err).not.toContain("\n");
+  });
+});
+
+describe("buildAiPrompt", () => {
+  test("embeds the user's current template inside a handlebars code block", () => {
+    const userTemplate = "# {{title}}\n\n{{#each sections}}- {{heading}}\n{{/each}}";
+    const prompt = buildAiPrompt(userTemplate);
+    expect(prompt).toContain("## My current template");
+    expect(prompt).toContain("```handlebars\n" + userTemplate + "\n```");
+  });
+
+  test("embeds the default template as a baseline", () => {
+    const prompt = buildAiPrompt("anything");
+    expect(prompt).toContain("## Default template (reference baseline)");
+    expect(prompt).toContain(DEFAULT_TEMPLATE);
+  });
+
+  test("explicitly asks the AI to respond with a handlebars code block", () => {
+    const prompt = buildAiPrompt("");
+    expect(prompt).toContain("```handlebars");
+    expect(prompt).toMatch(/inside a.*```handlebars.*code block/);
+  });
+
+  test("documents only the three custom helpers (eq, yamlEscape, formatDate)", () => {
+    const prompt = buildAiPrompt("");
+    expect(prompt).toContain("(eq A B)");
+    expect(prompt).toContain("yamlEscape");
+    expect(prompt).toContain("formatDate");
+    expect(prompt).toContain("don't invent others");
   });
 });
 

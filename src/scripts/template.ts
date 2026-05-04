@@ -82,6 +82,86 @@ export function renderTemplate(data: KindleData, template: string = DEFAULT_TEMP
 }
 
 /**
+ * Build a self-contained prompt the user can paste into Claude/ChatGPT/etc. to get
+ * help iterating on their template. Includes the data shape, the three custom
+ * helpers, the default template (as a baseline), the user's current template, and
+ * a small sample of input data so the model can reason about the output without
+ * needing the Kindle HTML format itself.
+ */
+export function buildAiPrompt(currentTemplate: string): string {
+  const sampleJson = JSON.stringify(
+    SAMPLE_DATA,
+    (_key, value) => (value instanceof Date ? value.toISOString() : value),
+    2,
+  );
+  return `I'm customizing a Handlebars template for kindle2md, a tool that converts Kindle highlight HTML exports into Markdown notes. Help me iterate on the template below.
+
+## Available data
+
+The template receives this shape (TypeScript):
+
+\`\`\`ts
+type KindleData = {
+  title: string;        // book's title
+  author: string;       // author or author list
+  date: Date;           // moment of conversion
+  sections: {
+    heading: string;    // chapter name (may be "" for entries before any heading)
+    entries: (
+      | { type: "highlight"; text: string; location: string; color?: string }
+      | { type: "note"; text: string; location: string }
+      | { type: "bookmark"; location: string }
+    )[];
+  }[];
+};
+\`\`\`
+
+## Handlebars syntax
+
+Standard Handlebars rules apply ({{var}}, {{#each}}, {{#if}}, {{#unless}}, etc.). HTML escaping is OFF (the renderer uses { noEscape: true } since the output is Markdown, not HTML), so values containing < or & pass through unchanged. The only place to be careful is inside single-quoted YAML strings — use the {{yamlEscape}} helper there.
+
+## Custom helpers (only these three; please don't invent others)
+
+- **(eq A B)** — strict equality. Use inside {{#if}} to discriminate entry types:
+  {{#if (eq type "highlight")}}> {{text}}{{/if}}
+- **{{yamlEscape s}}** — doubles single quotes in s so the value is safe to embed in a single-quoted YAML string.
+- **{{formatDate date "format"}}** — moment-style date formatting. Tokens (and what they emit for Jan 5, 2024 at 08:04:09):
+  - yyyy → 2024, yy → 24
+  - MMMM → January, MMM → Jan, MM → 01, M → 1
+  - dd → 05, d → 5
+  - HH → 08, H → 8
+  - mm → 04, m → 4
+  - ss → 09, s → 9
+  - Wrap literal characters in [brackets] so they aren't interpreted as tokens, e.g. yyyy-MM-dd[T]HH:mm → 2024-01-05T08:04.
+
+## Default template (reference baseline)
+
+\`\`\`handlebars
+${DEFAULT_TEMPLATE}
+\`\`\`
+
+## My current template
+
+\`\`\`handlebars
+${currentTemplate}
+\`\`\`
+
+## Sample input (so you can reason about the output without seeing real Kindle HTML)
+
+\`\`\`json
+${sampleJson}
+\`\`\`
+
+## What I want changed
+
+[Describe what you want changed about the template here.]
+
+---
+
+**Please respond with**: a brief explanation of your changes, then the FULL updated template inside a \`\`\`handlebars code block so I can copy it directly into my editor. Don't elide unchanged sections — give me the complete template every time.`;
+}
+
+/**
  * Compile and dry-run the template against a minimal sample to catch both compile-time
  * and runtime errors (Handlebars compiles permissively but throws during render on
  * mismatched blocks, helper exceptions, etc.). Returns a single-line error message on

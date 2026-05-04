@@ -1,6 +1,7 @@
 import { saveAs } from "file-saver";
 import { extractKindleData } from "./extract";
 import {
+  buildAiPrompt,
   DEFAULT_TEMPLATE,
   highlightHandlebars,
   renderTemplate,
@@ -28,6 +29,8 @@ const previewLabel = $<HTMLSpanElement>("templatePreviewLabel");
 const copyBtn = $<HTMLButtonElement>("templateCopy");
 const copyIcon = $<SVGSVGElement & HTMLElement>("templateCopyIcon");
 const copyLabel = $<HTMLSpanElement>("templateCopyLabel");
+const aiPromptBtn = $<HTMLButtonElement>("aiPromptCopy");
+const aiPromptLabel = $<HTMLSpanElement>("aiPromptCopyLabel");
 const resetBtn = $<HTMLButtonElement>("templateReset");
 const status = $<HTMLParagraphElement>("templateStatus");
 
@@ -105,6 +108,20 @@ copyBtn.addEventListener("click", async () => {
       copyIcon.innerHTML = COPY_ICON_IDLE;
       copyLabel.textContent = "Copy template";
     }, 2000);
+  } catch (err) {
+    alert(`Couldn't copy: ${err instanceof Error ? err.message : String(err)}`);
+  }
+});
+
+let aiPromptResetTimer: number | undefined;
+aiPromptBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(buildAiPrompt(template));
+    aiPromptLabel.textContent = "Copied — paste into your AI chat";
+    if (aiPromptResetTimer) clearTimeout(aiPromptResetTimer);
+    aiPromptResetTimer = window.setTimeout(() => {
+      aiPromptLabel.textContent = "Copy AI prompt";
+    }, 3000);
   } catch (err) {
     alert(`Couldn't copy: ${err instanceof Error ? err.message : String(err)}`);
   }
