@@ -143,12 +143,12 @@
           </summary>
           <div class="platter-pad-no-top flex flex-col gap-4 text-sm">
             <div class="flex flex-col gap-1">
-              <label class="text-xs font-medium" for="outputMode"
+              <label class="font-medium" for="outputMode"
                 >When conversion finishes</label
               >
               <select
                 id="outputMode"
-                class="platter-inner-card border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none dark:border-slate-700 dark:bg-slate-800 dark:focus-visible:ring-sky-500"
+                class="platter-inner-card border border-stone-300 bg-white py-1.5 pr-8 pl-3 font-medium shadow-sm transition focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none dark:border-slate-700 dark:bg-slate-800 dark:focus-visible:ring-sky-500"
               >
                 <option value="download">Download Markdown file</option>
                 <option value="clipboard">Copy to clipboard</option>
@@ -156,10 +156,10 @@
               </select>
               <p
                 id="outputModeHelp"
-                class="text-xs leading-relaxed opacity-60"
+                class="leading-relaxed opacity-60"
               ></p>
             </div>
-            <p class="text-xs leading-relaxed opacity-80">
+            <p class="leading-relaxed opacity-80">
               The textarea below is a
               <a
                 href="https://handlebarsjs.com/guide/"
@@ -173,7 +173,7 @@
               you type.
             </p>
             <details
-              class="platter-inner-card group/cheat bg-stone-200/70 p-2 text-xs leading-relaxed opacity-80 dark:bg-slate-800/70"
+              class="platter-inner-card group/cheat bg-stone-200/70 p-2 leading-relaxed opacity-80 dark:bg-slate-800/70"
             >
               <summary
                 class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
@@ -205,7 +205,7 @@
                   <button
                     id="aiPromptCopy"
                     type="button"
-                    class="platter-inner-card mt-2 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                    class="platter-inner-card mt-2 border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
                   >
                     <span id="aiPromptCopyLabel">Copy AI prompt</span>
                   </button>
@@ -363,7 +363,7 @@
                 id="templatePreview"
                 type="button"
                 aria-pressed="false"
-                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
+                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -385,7 +385,7 @@
               <button
                 id="templateCopy"
                 type="button"
-                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
               >
                 <svg
                   id="templateCopyIcon"
@@ -409,12 +409,12 @@
               </button>
               <p
                 id="templateStatus"
-                class="text-xs opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
+                class="opacity-75 data-[state=error]:text-red-600 dark:data-[state=error]:text-red-400"
               ></p>
               <button
                 id="templateReset"
                 type="button"
-                class="platter-inner-card ml-auto border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-500 shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+                class="platter-inner-card ml-auto border border-stone-300 bg-white px-3 py-1.5 font-medium text-stone-500 shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
               >
                 Reset
               </button>
@@ -424,10 +424,10 @@
       </div>
 
       <footer
-        class="flex w-full max-w-screen-sm flex-row items-center justify-between gap-2 text-center text-sm text-stone-600 dark:text-slate-400"
+        class="mt-4 flex w-full max-w-screen-sm flex-row items-center justify-between gap-2 text-center text-sm text-stone-600 dark:text-slate-400"
       >
         <p>
-          <span class="text-xs">Made by</span>
+          by
           <a
             href="https://nathancheng.work/"
             target="_blank"
@@ -437,12 +437,11 @@
         </p>
         <p>•</p>
         <p>
-          💌&nbsp;
           <a
             href="https://www.buymeacoffee.com/nthnchng"
             target="_blank"
             class="font-semibold"
-            >Send a Tip</a
+            >Send tip &lt;3</a
           >
         </p>
         <p>•</p>
@@ -453,7 +452,6 @@
             class="font-semibold no-underline"
             >Github</a
           >
-          <span class="text-xs">(CC0‑1.0 license)</span>
         </p>
       </footer>
     </main>
