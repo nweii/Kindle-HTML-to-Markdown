@@ -48,6 +48,23 @@
   border-radius: calc(var(--platter-radius) - var(--platter-padding));
 }
 
+/* Custom chevron for <select>. Padding-right alone doesn't reposition the
+   native chevron in most browsers — it's an OS-rendered decoration glued to
+   the right edge. We disable it and draw our own with controllable position. */
+.select-chevron {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 16px 16px;
+}
+@media (prefers-color-scheme: dark) {
+  .select-chevron {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  }
+}
+
 a {
   @apply underline underline-offset-2 transition duration-300 hover:text-sky-500 hover:dark:text-sky-100;
 }
