@@ -48,7 +48,7 @@
            and --platter-padding (inner = outer - padding). Tweak --platter-radius
            in styles.css to experiment. -->
       <div
-        class="platter border border-stone-200 bg-stone-50/60 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+        class="platter ring-[0.5px] ring-stone-950/8 inset-ring-[0.5px] inset-ring-white/60 bg-linear-to-b from-stone-100/70 to-stone-50/40 shadow-sm dark:ring-white/8 dark:inset-ring-white/8 dark:from-slate-900/70 dark:to-slate-800/50"
       >
         <!-- Dropzone tray, nested on top of the platter. -->
         <div class="platter-pad-no-bottom">
@@ -59,7 +59,7 @@
             dark:[background:var(--img-noise),linear-gradient(to_bottom,var(--color-slate-900)_33%,var(--color-slate-800)_100%)]
             has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-amber-500 dark:has-[input:focus-visible]:ring-sky-500 dark:has-[input:focus-visible]:ring-offset-slate-900
             inset-shadow-stone-500/10 dark:inset-shadow-slate-950/33
-            ring ring-stone-900/10 dark:ring-slate-50/8
+            ring-[0.5px] ring-stone-950/10 dark:ring-white/10
             inset-shadow-sm
             shadow-md shadow-stone-800/10 dark:shadow-slate-900/80
             transition duration-500
@@ -145,7 +145,7 @@
               >
               <select
                 id="outputMode"
-                class="select-chevron platter-inner-card border border-stone-300 bg-white py-1.5 pr-9 pl-3 font-medium shadow-sm transition focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none dark:border-slate-700 dark:bg-slate-800 dark:focus-visible:ring-sky-500"
+                class="select-chevron platter-inner-card ring-[0.5px] ring-stone-950/12 py-1.5 pr-9 pl-3 font-medium shadow-sm transition focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none dark:ring-white/10 inset-ring-[0.5px] inset-ring-white/60 dark:inset-ring-white/8 dark:focus-visible:ring-sky-500"
               >
                 <option value="download">Download Markdown file</option>
                 <option value="clipboard">Copy to clipboard</option>
@@ -172,7 +172,7 @@
               >Markdown output template</label
             >
             <div
-              class="platter-inner-card relative border border-stone-300 bg-white shadow-inner focus-within:ring-2 focus-within:ring-amber-500 dark:border-slate-700 dark:bg-slate-950 dark:focus-within:ring-sky-500"
+              class="platter-inner-card relative ring-[0.5px] ring-stone-950/12 bg-white shadow-inner focus-within:ring-2 focus-within:ring-amber-500 dark:ring-white/10 dark:bg-slate-950 dark:focus-within:ring-sky-500"
             >
               <pre
                 id="templateHighlight"
@@ -191,7 +191,7 @@
                 id="templatePreview"
                 type="button"
                 aria-pressed="false"
-                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 aria-pressed:border-amber-500 aria-pressed:bg-amber-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:aria-pressed:border-amber-400 dark:aria-pressed:bg-amber-900/40"
+                class="platter-inner-card flex items-center gap-1.5 ring-[0.5px] ring-stone-950/12 bg-linear-to-b from-stone-100 to-white px-3 py-1.5 font-medium shadow-sm transition hover:from-stone-200 hover:to-stone-100 aria-pressed:ring-amber-500 aria-pressed:bg-none aria-pressed:bg-amber-100 dark:ring-white/10 inset-ring-[0.5px] inset-ring-white/60 dark:inset-ring-white/8 dark:from-slate-800 dark:to-[#283548] dark:hover:from-[#283548] dark:hover:to-slate-700 dark:aria-pressed:ring-amber-400 dark:aria-pressed:bg-amber-900/40"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +213,7 @@
               <button
                 id="templateCopy"
                 type="button"
-                class="platter-inner-card flex items-center gap-1.5 border border-stone-300 bg-white px-3 py-1.5 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                class="platter-inner-card flex items-center gap-1.5 ring-[0.5px] ring-stone-950/12 bg-linear-to-b from-stone-100 to-white px-3 py-1.5 font-medium shadow-sm transition hover:from-stone-200 hover:to-stone-100 dark:ring-white/10 inset-ring-[0.5px] inset-ring-white/60 dark:inset-ring-white/8 dark:from-slate-800 dark:to-[#283548] dark:hover:from-[#283548] dark:hover:to-slate-700"
               >
                 <svg
                   id="templateCopyIcon"
@@ -244,7 +244,7 @@
                 type="button"
                 aria-label="Reset to default"
                 title="Reset to default"
-                class="platter-inner-card ml-auto border border-stone-300 bg-white p-2 text-stone-500 shadow-sm transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:disabled:hover:bg-slate-800"
+                class="platter-inner-card ml-auto ring-[0.5px] ring-stone-950/12 bg-linear-to-b from-stone-100 to-white p-2 text-stone-500 shadow-sm transition hover:from-stone-200 hover:to-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:from-stone-100 disabled:hover:to-white dark:ring-white/10 inset-ring-[0.5px] inset-ring-white/60 dark:inset-ring-white/8 dark:from-slate-800 dark:to-[#283548] dark:text-slate-400 dark:hover:from-[#283548] dark:hover:to-slate-700 dark:disabled:hover:from-slate-800 dark:disabled:hover:to-[#283548]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +265,7 @@
               </button>
             </div>
             <details
-              class="platter-inner-card group/cheat bg-white/50 px-3 py-1.5 leading-relaxed opacity-80 dark:bg-slate-800/40"
+              class="platter-inner-card cheat-surface group/cheat bg-stone-950/[0.03] px-3 py-1.5 leading-relaxed opacity-80 dark:bg-slate-800/40"
             >
               <summary
                 class="flex cursor-pointer list-none items-center gap-2 font-medium select-none [&::-webkit-details-marker]:hidden"
@@ -295,7 +295,7 @@
                   <button
                     id="aiPromptCopy"
                     type="button"
-                    class="platter-inner-card border border-stone-300 bg-white px-3 py-1 font-medium shadow-sm transition hover:bg-stone-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+                    class="platter-inner-card ring-[0.5px] ring-stone-950/12 bg-linear-to-b from-stone-100 to-white px-3 py-1 font-medium shadow-sm transition hover:from-stone-200 hover:to-stone-100 dark:ring-white/10 inset-ring-[0.5px] inset-ring-white/60 dark:inset-ring-white/8 dark:from-slate-800 dark:to-[#283548] dark:hover:from-[#283548] dark:hover:to-slate-700"
                   >
                     <span id="aiPromptCopyLabel">Copy AI prompt</span>
                   </button>
