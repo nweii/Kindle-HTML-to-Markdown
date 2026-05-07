@@ -108,12 +108,12 @@ pre code {
 }
 @media (prefers-color-scheme: dark) {
   .cheat-surface {
-    box-shadow: 0 0 0 0.5px rgb(255 255 255 / 0.08);
+    box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.4);
   }
   .cheat-surface code,
   .cheat-surface pre {
     background-color: rgb(30 41 59 / 0.4);
-    box-shadow: 0 0 0 0.5px rgb(255 255 255 / 0.08);
+    box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.4);
   }
   .cheat-surface pre code {
     background: transparent;
@@ -142,7 +142,7 @@ pre code {
   .cheat-surface,
   .cheat-surface code,
   .cheat-surface pre {
-    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4);
   }
   .cheat-surface pre code {
     box-shadow: none;
