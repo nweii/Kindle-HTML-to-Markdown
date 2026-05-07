@@ -43,11 +43,11 @@ export const SAMPLE_DATA: KindleData = {
 
 export const DEFAULT_TEMPLATE = `---
 title: {{title}}
-author: {{author}}
+author: '[[{{yamlEscape author}}]]'
 aliases: ['"{{yamlEscape title}}" by {{yamlEscape author}}']
 ---
 ## Highlights
-From *{{title}}* by {{author}}:
+From *{{title}}* by [[{{author}}]]:
 
 {{#each sections}}{{#if heading}}### {{heading}}
 {{/if}}{{#each entries}}{{#if (eq type "highlight")}}> {{text}}

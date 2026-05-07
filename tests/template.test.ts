@@ -19,7 +19,7 @@ describe("DEFAULT_TEMPLATE", () => {
   test("emits YAML frontmatter with title, author, and aliases", async () => {
     const md = await render("single-author.html");
     expect(md).toMatch(
-      /^---\ntitle: Thinking, Fast and Slow\nauthor: Daniel Kahneman\naliases: \['"Thinking, Fast and Slow" by Daniel Kahneman'\]\n---/,
+      /^---\ntitle: Thinking, Fast and Slow\nauthor: '\[\[Daniel Kahneman\]\]'\naliases: \['"Thinking, Fast and Slow" by Daniel Kahneman'\]\n---/,
     );
   });
 
@@ -47,7 +47,7 @@ describe("DEFAULT_TEMPLATE", () => {
   test("handles modern Kindle format end-to-end", async () => {
     const md = await render("modern-format.html");
     expect(md).toContain("title: Trick Mirror - Reflections on Self-Delusion");
-    expect(md).toContain("author: Jia Tolentino");
+    expect(md).toContain("author: '[[Jia Tolentino]]'");
     expect(md).toContain("### Introduction");
     expect(md).toContain(
       "> When I feel confused about something, I write about it until I turn into the person who shows up on paper.",
