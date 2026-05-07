@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-import { extractKindleData } from "./extract";
+import { auditExtraction, extractKindleData, normalizeKindleHtml } from "./extract";
 import {
   buildAiPrompt,
   DEFAULT_TEMPLATE,
@@ -143,12 +143,15 @@ async function convertAll(): Promise<void> {
 
   const results: { fileName: string; content: string }[] = [];
   const failures: string[] = [];
+  const warnings: string[] = [];
 
   for (const file of files) {
     try {
       const html = await file.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const md = renderTemplate(extractKindleData(doc), template);
+      const doc = new DOMParser().parseFromString(normalizeKindleHtml(html), "text/html");
+      const data = extractKindleData(doc);
+      const md = renderTemplate(data, template);
+      for (const w of auditExtraction(html, data)) warnings.push(`${file.name}: ${w}`);
       results.push({
         fileName: file.name.replace(/\.html$/i, ".md").replace("Notebook", "Kindle Notes"),
         content: md,
@@ -195,6 +198,10 @@ async function convertAll(): Promise<void> {
     alert(
       `${results.length} file(s) converted. ${failures.length} couldn't be converted:\n\n${failures.join("\n\n")}`,
     );
+  }
+
+  if (warnings.length > 0) {
+    alert(`Conversion finished, but with warnings:\n\n${warnings.join("\n\n")}`);
   }
 
   fileInput.value = "";

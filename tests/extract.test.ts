@@ -1,9 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { extractKindleData } from "../src/scripts/extract";
+import { auditExtraction, extractKindleData, normalizeKindleHtml } from "../src/scripts/extract";
+
+async function rawHtml(name: string): Promise<string> {
+  return Bun.file(`${import.meta.dir}/fixtures/${name}`).text();
+}
 
 async function parse(name: string): Promise<Document> {
-  const html = await Bun.file(`${import.meta.dir}/fixtures/${name}`).text();
-  return new DOMParser().parseFromString(html, "text/html");
+  const html = await rawHtml(name);
+  return new DOMParser().parseFromString(normalizeKindleHtml(html), "text/html");
 }
 
 describe("extractKindleData", () => {
@@ -72,8 +76,80 @@ describe("extractKindleData", () => {
     expect(entry).toMatchObject({ type: "highlight", text: "" });
   });
 
+  test("parses XHTML-flavored exports that wrap headings in h2/h3 with malformed nesting", async () => {
+    const data = extractKindleData(await parse("xhtml-h-tag-malformed.html"));
+    expect(data.title).toBe("Example Book - A Sample Subtitle");
+    expect(data.author).toBe("Jane Doe");
+    expect(data.sections).toHaveLength(1);
+    const entries = data.sections[0]!.entries;
+    expect(entries).toHaveLength(3);
+    expect(entries[0]).toEqual({
+      type: "highlight",
+      text: "First example highlight text.",
+      location: "Chapter One > Page 1 · Location 100",
+      color: "yellow",
+    });
+    expect(entries[1]).toEqual({
+      type: "note",
+      text: "First example note text.",
+      location: "Chapter One > Page 1 · Location 101",
+    });
+    expect(entries[2]).toEqual({
+      type: "bookmark",
+      location: "Chapter Two > Page 2 · Location 200",
+    });
+  });
+
   test("throws on input that is not a Kindle export", () => {
     const doc = new DOMParser().parseFromString("<html><body>nope</body></html>", "text/html");
     expect(() => extractKindleData(doc)).toThrow(/Kindle notebook HTML export/);
+  });
+});
+
+describe("auditExtraction", () => {
+  test("returns no warnings when extracted count matches source markers", async () => {
+    const html = await rawHtml("all-entry-types.html");
+    const data = extractKindleData(
+      new DOMParser().parseFromString(normalizeKindleHtml(html), "text/html"),
+    );
+    expect(auditExtraction(html, data)).toEqual([]);
+  });
+
+  test("warns when zero entries were parsed but the source has markers", async () => {
+    const html = await rawHtml("xhtml-h-tag-malformed.html");
+    // Simulate a parser that didn't run normalization — the old broken behavior.
+    const data = extractKindleData(new DOMParser().parseFromString(html, "text/html"));
+    const warnings = auditExtraction(html, data);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toMatch(/couldn't parse any/);
+    expect(warnings[0]).toMatch(/3/);
+  });
+
+  test("warns with a count when some but not all entries were parsed", () => {
+    const html = `
+      <div class='bodyContainer'>
+        <div class='bookTitle'>X</div><div class='authors'>A</div>
+        <div class='noteHeading'>Highlight (Yellow) - Loc 1</div>
+        <div class='noteText'>one</div>
+        <div class='noteHeading'>Highlight (Yellow) - Loc 2</div>
+        <div class='noteText'>two</div>
+      </div>`;
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const data = extractKindleData(doc);
+    // Now imagine the source had 5 markers but parsing only saw 2 (e.g. truncated/escaped):
+    const inflatedHtml = html + `<!-- class="noteHeading" class="noteHeading" class="noteHeading" -->`;
+    const warnings = auditExtraction(inflatedHtml, data);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toMatch(/Extracted 2 entries/);
+    expect(warnings[0]).toMatch(/5 marker/);
+    expect(warnings[0]).toMatch(/3 entries appear to be missing/);
+  });
+
+  test("returns no warnings when there are no entries and no markers", async () => {
+    const html = await rawHtml("empty-body.html");
+    const data = extractKindleData(
+      new DOMParser().parseFromString(normalizeKindleHtml(html), "text/html"),
+    );
+    expect(auditExtraction(html, data)).toEqual([]);
   });
 });

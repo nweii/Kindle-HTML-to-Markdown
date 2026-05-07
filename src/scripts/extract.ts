@@ -15,6 +15,49 @@ export type KindleData = {
   sections: KindleSection[];
 };
 
+// Older XHTML-flavored Kindle exports (Mac/PC desktop app) wrap headings in
+// <h2 class='sectionHeading'> / <h3 class='noteHeading'> with malformed nesting:
+//   <h3 class='noteHeading'>...</div><div class='noteText'>...</h3>
+// HTML5 parsers can't put <div> inside <h3>, so the noteText divs leak out of
+// .bodyContainer and swallow trailing siblings — yielding a parse with title
+// and author intact but zero highlights. Renaming h2/h3 (and their closers) to
+// div makes the existing div-pair structure well-formed without touching the
+// modern (already div-based) format.
+export function normalizeKindleHtml(html: string): string {
+  return html
+    .replace(/<h2(\s[^>]*class\s*=\s*['"]sectionHeading['"][^>]*)>/gi, "<div$1>")
+    .replace(/<h3(\s[^>]*class\s*=\s*['"]noteHeading['"][^>]*)>/gi, "<div$1>")
+    .replace(/<\/h2>/gi, "</div>")
+    .replace(/<\/h3>/gi, "</div>");
+}
+
+// Independent sanity check that runs after extraction. Counts the raw
+// `class='noteHeading'` markers in the source HTML and compares to how many
+// entries we actually extracted. A shortfall means our parser silently dropped
+// content — usually an unfamiliar export format. This is a lower bound, not a
+// guarantee: the regex doesn't validate that each marker is a complete entry.
+export function auditExtraction(html: string, data: KindleData): string[] {
+  const warnings: string[] = [];
+
+  const markerCount = (html.match(/class\s*=\s*['"]noteHeading['"]/gi) ?? []).length;
+  const extractedCount = data.sections.reduce((n, s) => n + s.entries.length, 0);
+
+  if (markerCount > extractedCount) {
+    const lost = markerCount - extractedCount;
+    if (extractedCount === 0) {
+      warnings.push(
+        `Found ${markerCount} highlight/note marker(s) in the source but couldn't parse any of them. The export format may not be supported — please report this with a copy of the file.`,
+      );
+    } else {
+      warnings.push(
+        `Extracted ${extractedCount} entries but the source HTML contains ${markerCount} marker(s). ${lost} entr${lost === 1 ? "y appears" : "ies appear"} to be missing — the export format may have unfamiliar quirks.`,
+      );
+    }
+  }
+
+  return warnings;
+}
+
 export function extractKindleData(doc: Document): KindleData {
   const bodyContainer = doc.querySelector(".bodyContainer");
   const titleEl = doc.querySelector(".bookTitle");
